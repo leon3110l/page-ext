@@ -1,3 +1,7 @@
+/*********
+ Variables
+*********/
+
 const tables = document.querySelectorAll('#urlform table')
 
 // specifies when a thing ends
@@ -16,10 +20,17 @@ const removeList = [
   'over',
   'diver',
   'zoekmachine',
+  'dochter',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
 
+/******************
+ On load functions
+******************/
+
+// runs on load
+// creates coloured tags
 for (let table of tables) {
   const tags = table.querySelectorAll('tbody tr td ul li')
   for (let tag of tags) {
@@ -44,6 +55,8 @@ for (let table of tables) {
   }
 }
 
+// runs on load
+// adds urls to the pages
 const urlForm = document.querySelector('textarea[name="urls"]')
 if (urlForm) {
   urlForm.addEventListener('change', () => {
@@ -52,11 +65,15 @@ if (urlForm) {
   })
 }
 
+// runs onload
+// unchecks h3 selector checkbox
 const h3Selector = document.querySelector('input[value="h3"]')
 if (h3Selector) {
   h3Selector.checked = false
 }
 
+// runs onLoad
+// filters items list on unwanted items
 const urlTrs = document.querySelectorAll('table tbody tr')
 let items = 0
 for (let row of urlTrs) {
@@ -72,6 +89,8 @@ for (let row of urlTrs) {
   }
 }
 
+// runs on load
+// reduces page categories to 25
 while (items >= 26) {
   let row = urlTrs[Math.floor(Math.random() * items)]
   if (row) {
