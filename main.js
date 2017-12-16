@@ -16,34 +16,39 @@ const removeList = [
   'over',
   'diver',
   'zoekmachine',
+  'dochter',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
 
-for (let table of tables) {
-  const tags = table.querySelectorAll('tbody tr td ul li')
-  for (let tag of tags) {
-    const state = {
-      site: false,
-    }
-    const text = tag.querySelector('span').innerHTML.toLowerCase()
-    if (text.length === 1 && text != '/') {
-      tag.style.border = '5px solid red'
-    }
-    if (
-      text.search(remCharacters) > -1 ||
-      text.search(website) > -1 ||
-      text.indexOf('home') > -1
-    ) {
-      tag.style.border = '5px solid orange'
-      state.site = true
-    }
-    if (text.search(endCharacters) > -1 && !state.site) {
-      tag.style.border = '5px solid yellow'
-    }
-  }
-}
+// for (let table of tables) {
+//   const tags = table.querySelectorAll('tbody tr td ul li')
+//   for (let tag of tags) {
+//     const state = {
+//       site: false,
+//     }
+//
+//     const text = tag.querySelector('span').innerHTML.toLowerCase()
+//     if (text.length === 1 && text != '/') {
+//       tag.style.border = '5px solid red'
+//     }
+//
+//     if (
+//       text.search(remCharacters) > -1 ||
+//       text.search(website) > -1 ||
+//       text.indexOf('home') > -1
+//     ) {
+//       tag.style.border = '5px solid orange'
+//       state.site = true
+//     }
+//
+//     if (text.search(endCharacters) > -1 && !state.site) {
+//       tag.style.border = '5px solid yellow'
+//     }
+//   }
+// }
 
+//adds addEventListener onload
 const urlForm = document.querySelector('textarea[name="urls"]')
 if (urlForm) {
   urlForm.addEventListener('change', () => {
