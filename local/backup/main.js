@@ -24,8 +24,8 @@ const removeList = [
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
-let items = -1; // for ranomizing
-//let realItems = -1 // for tracking real items
+let items = -1;
+let realItems = -1;
 
 
 // for (let table of tables) {
@@ -62,46 +62,52 @@ let items = -1; // for ranomizing
 
 
 window.addEventListener("keyup", function(e) {
-    const urlTrs = document.querySelectorAll('table tbody tr')
-
     if (e.shiftKey === true) {
-        if ( e.key.toLowerCase() === "d") {
+        if ( e.key.toLowerCase() === "z") {
+
+            const urlTrs = document.querySelectorAll('table tbody tr')
             console.log("Run filterStuff")
-            initializeFilterStuff(urlTrs)
 
-            setInterval(function () {
-                //items = realItems
-                if (items <= 25 && items > 0) {
+            initializeFilterStuff(urlTrs);
+            console.log("not broken")
 
-                } else {
-                    console.log("Run mainFiliterStuff items")
-                    mainFilterStuff(urlTrs)
-                }
-            }, 500);
+
+            mainFilterStuff(urlTrs);
+            console.log("still not broken")
+
+            // const urlTrs = document.querySelectorAll('table tbody tr')
+            // initializeFilterStuff(urlTrs);
+            // setInterval(function () {
+            //     console.log("Run filterStuff")
+            //     if (items <= 25 && items > 0) {
+            //
+            //     } else {
+            //    mainFilterStuff(urlTrs);
+            //     }
+            // },500);
         }
     }
 }, 1 );
 
 
-// filters items list on unwanted items and count realItems
+// filters items list on unwanted items
 function initializeFilterStuff(urlTrs) {
 
     for (let row of urlTrs) {
-        const textElem = row.querySelector('.nameselector')
+      const textElem = row.querySelector('.nameselector')
+      if (textElem) {
+        const text = textElem.innerHTML.toLowerCase()
 
-        if (textElem)
-            const text = textElem.innerHTML.toLowerCase()
-
-            //remove garbage
-            if (removeList.some(x => text.search(x) != -1)) {
-                console.log('remove: ', text)
-                row.querySelector('.btn-warning').click()
-            }
-
-            else {
-                realItems++
-            }
+        //filter removeShit
+        if (removeList.some(x => text.search(x) != -1)) {
+          console.log('remove: ', text)
+          row.querySelector('.btn-warning').click()
         }
+
+        else {
+          items++
+        }
+      }
     }
 }
 
@@ -109,14 +115,13 @@ function mainFilterStuff(urlTrs) {
 
     // reduces page categories to 25
     while (items >= 26) {
-        let row = urlTrs[Math.floor(Math.random() * items)]
-        if (row) {
-            setTimeout(() => {
-                row.querySelector('.btn-warning').click()
-                realItems--
-            }, items * 2 + 100)
-            console.log(items--)
-        }
+      let row = urlTrs[Math.floor(Math.random() * items)]
+      if (row) {
+        setTimeout(() => {
+          row.querySelector('.btn-warning').click()
+        }, items * 2 + 100)
+        console.log(items--)
+      }
     }
 }
 
@@ -133,8 +138,8 @@ if (h3Selector) {
 // adds Urls onChange
 const urlForm = document.querySelector('textarea[name="urls"]')
 if (urlForm) {
-    urlForm.addEventListener('change', () => {
-        const old = urlForm.value
-        urlForm.value = `${old}.uwpagina.nl\r\n${old}.links.nl\r\n${old}.allepaginas.nl\r\n${old}.beginzo.nl\r\n${old}.linkpaginas.nl\r\n${old}.startsleutel.nl\r\n${old}.zoeklink.nl\r\n${old}.eigenstart.nl\r\n`
-    })
+  urlForm.addEventListener('change', () => {
+    const old = urlForm.value
+    urlForm.value = `${old}.uwpagina.nl\r\n${old}.links.nl\r\n${old}.allepaginas.nl\r\n${old}.beginzo.nl\r\n${old}.linkpaginas.nl\r\n${old}.startsleutel.nl\r\n${old}.zoeklink.nl\r\n${old}.eigenstart.nl\r\n`
+  })
 }
