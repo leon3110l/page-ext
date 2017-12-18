@@ -254,51 +254,6 @@ const paginaMaken = (function (programSettings) {
     }
 })(programSettings);
 
-// (linkColourer = function (settings) {
-//     if (settings.methodEnabled == true) {
-//         const tables = document.querySelectorAll('#urlform table')
-//
-//         const endCharacters = /([:.?!])/g           // specifies when a thing ends
-//         const remCharacters = /([|]{2})|([≥()])/g   // specifies the stuff to take out
-//         const website = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g // website check
-//
-//
-//         for (let table of tables) {
-//             const tags = table.querySelectorAll('tbody tr td ul li');
-//
-//             for (let tag of tags) {
-//                 const state = {
-//                     site: false,
-//                 }
-//                 const text = tag.querySelector('span').innerHTML.toLowerCase();
-//
-//                 if (settings.red == true) {
-//                     if (text.length === 1 && text != '/') {
-//                         tag.style.border = '5px solid red'
-//                     }
-//                 }
-//
-//                 if (settings.orange == true) {
-//                     if (
-//                         text.search(remCharacters) > -1 ||
-//                         text.search(website) > -1 ||
-//                         text.indexOf('home') > -1
-//                     ) {
-//                         tag.style.border = '5px solid orange'
-//                         state.site = true
-//                     }
-//                 }
-//
-//                 if (settings.yellow == true) {
-//                     if (text.search(endCharacters) > -1 && !state.site) {
-//                         tag.style.border = '5px solid yellow'
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// })(programSettings.linkColourer);
-
 /*
   ----------------------
   klaar zetten singleton
@@ -309,9 +264,6 @@ const paginaMaken = (function (programSettings) {
 const klaarzetten = (function () {
 
     //private properties
-
-    const urlTrs = document.querySelectorAll('table#cats tbody tr');
-
     const removeList = [
       'algeme',
       'link',
@@ -329,43 +281,44 @@ const klaarzetten = (function () {
     // private methods
 
     // filters items list on unwanted items
-    function initializeFilterStuff(urlTrs) {
-        items = 0
+    function initializeFilterStuff() {
+        const urlTrs = document.querySelectorAll('table#cats tbody tr')
+
+        let items = 0
         for (let row of urlTrs) {
             const textElem = row.querySelector('.nameselector')
             if (textElem) {
                 const text = textElem.innerHTML.toLowerCase()
-
-                //filter removeShit
                 if (removeList.some(x => text.search(x) != -1)) {
                     console.log('remove: ', text)
                     row.querySelector('.btn-warning').click()
-                }
-
-                else {
-                   items++
+                } else {
+                    items++
                 }
             }
         }
-    }
 
-    function mainFilterStuff(urlTrs) {
-        // reduces page categories to 25
+
         while (items >= 26) {
             let row = urlTrs[Math.floor(Math.random() * items)]
             if (row) {
-                row.querySelector('.btn-warning').click()
+                setTimeout(() => {
+                    row.querySelector('.btn-warning').click()
+                }, items * 2 + 100)
                 console.log(items--)
             }
         }
     }
 
-    function setNummering(urlTrs) {
+
+    function setNummering() {
+        const urlTrs = document.querySelectorAll('table#cats tbody tr')
+
         setTimeout(() => {
             for (let i = 0; i < urlTrs.length; i++) {
                 urlTrs[i].children[0].innerHTML = i + 1;
             }
-        }, 1 + (items*1.2) - items);
+        }, 20);
     }
 
     // Public items
@@ -373,9 +326,11 @@ const klaarzetten = (function () {
         items: -1,
 
         runScript: function() {
-            initializeFilterStuff(urlTrs);
-            mainFilterStuff(urlTrs);
-            setNummering(urlTrs);
+            setTimeout(function () {
+                initializeFilterStuff();
+                // mainFilterStuff(urlTrs);
+                setNummering();
+            }, 10);
         },
 
         addEventListener: (function () {
