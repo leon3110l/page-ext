@@ -2,6 +2,8 @@
  Program Settings
 *****************/
 const programSettings = {
+
+    // linkColourer
     linkColourer: {
         methodEnabled: true,
 
@@ -10,23 +12,23 @@ const programSettings = {
         yellow: false
     },
 
-    // Test Settings
-    smokeTest: {
-        methodEnabled: true
-    },
-
-    removeOnCode: {
-        methodEnabled: true,
-        colorAffectedElements: false
-    },
-
     arrayToString : {
         addDot: false
     },
 
     urlRemover : {
         functionEnabled: true
-    }
+    },
+
+    // Test Settings
+    smokeTest: {
+        methodEnabled: false
+    },
+
+    removeOnCode: {
+        methodEnabled: true,
+        colorAffectedElements: false
+    },
 };
 
 
@@ -76,24 +78,27 @@ const paginaMaken = (function (programSettings) {
                                 // split the string;
                                 testArray = splitter(text);
 
-                                // create a binary removeCode;
-                                removeCode = testLooper(testArray);
+                                // if there is only 1 target stop going forward has no purpose
+                                if (testArray.length > 0) {
 
-                                // Remove elements from array based on binaryCode
-                                testArray = removeOnCode(removeCode, testArray, (tag.querySelector('span').style) );
+                                    // create a binary removeCode;
+                                    removeCode = testLooper(testArray);
 
-                                // convert the array back to a string
-                                value = arrayToString(testArray);
+                                    // Remove elements from array based on binaryCode
+                                    testArray = removeOnCode(removeCode, testArray, (tag.querySelector('span').style) );
 
-                                // replaces the original dom item with the newly computed one
-                                tag.querySelector('span').innerHTML = value;
-                                tag.querySelector('input').value = value;
+                                    // convert the array back to a string
+                                    value = arrayToString(testArray);
 
-                                const ui = document.querySelector('input.hidden').value;
-                                let id_pos = tag.id.split("_");
-                                sendAjax(ui, id_pos, value)
+                                    // replaces the original dom item with the newly computed one
+                                    tag.querySelector('span').innerHTML = value;
+                                    tag.querySelector('input').value = value;
 
-                            }, 2000);
+                                    const ui = document.querySelector('input.hidden').value;
+                                    let id_pos = tag.id.split("_");
+                                    sendAjax(ui, id_pos, value)
+                                }
+                            }, 1000);
                         }
                     }
                 })();
