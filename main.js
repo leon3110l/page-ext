@@ -130,6 +130,7 @@ const paginaMaken = (function (programSettings) {
                     "infonu",
                     "net",
                     "nl",
+                    "nl:",
                     "org",
                     "www",
                     "be",
