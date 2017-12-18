@@ -318,7 +318,7 @@ const klaarzetten = (function () {
             for (let i = 0; i < urlTrs.length; i++) {
                 urlTrs[i].children[0].innerHTML = i + 1;
             }
-        }, 20);
+        }, 5);
     }
 
     // Public items
@@ -326,11 +326,8 @@ const klaarzetten = (function () {
         items: -1,
 
         runScript: function() {
-            setTimeout(function () {
-                initializeFilterStuff();
-                // mainFilterStuff(urlTrs);
-                setNummering();
-            }, 10);
+            initializeFilterStuff();
+            setNummering();
         },
 
         addEventListener: (function () {
