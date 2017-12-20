@@ -1,16 +1,19 @@
 {
-    
-    "manifest_version": 2,
-    "name": "page helper",
-    "version": "1.0",
+  "manifest_version": 2,
+  "name": "page helper",
+  "version": "1.0",
 
-    "description": "adds borders around things to look for",
+  "description": "adds borders around things to look for",
 
-    "content_scripts": [
-        {
-            "matches": ["http://51.255.87.34/*"],
-            "js": ["main.js"]
-        }
-    ]
+  "content_scripts": [
+    {
+      "matches": ["http://51.255.87.34/*"],
+      "js": ["main.js"]
+    }
+  ],
 
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  }
 }

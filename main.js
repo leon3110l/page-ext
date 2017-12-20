@@ -16,9 +16,13 @@ const removeList = [
   'over',
   'diver',
   'zoekmachine',
+  'site',
+  'e.o.',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
+
+// browser.storage.local.get().then(res => console.log(res))
 
 for (let table of tables) {
   const tags = table.querySelectorAll('tbody tr td ul li')
