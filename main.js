@@ -23,6 +23,72 @@ const removeList = [
   /[^a-z /][ - ]/g,
 ]
 
+const exactRemoveList = [
+  'amsterdam',
+  'rotterdam',
+  'den haag',
+  'utrecht',
+  'eindhoven',
+  'tilburg',
+  'groningen',
+  'almere',
+  'breda',
+  'nijmegen',
+  'enschede',
+  'apeldoorn',
+  'haarlem',
+  'amersfoort',
+  'zaanstad',
+  'arnhem',
+  'haarlemmermeer',
+  "'s hertogenbosch",
+  'zoetermeer',
+  'zwolle',
+  'maastricht',
+  'leiden',
+  'dordrecht',
+  'ede',
+  'emmen',
+  'westland',
+  'venlo',
+  'delft',
+  'deventer',
+  'leeuwarden',
+  'alkmaar',
+  'sittard-geleen',
+  'helmond',
+  'heerlen',
+  'hilversum',
+  'oss',
+  'amstelveen',
+  'súdwest-fryslân',
+  'hengelo',
+  'purmerend',
+  'roosendaal',
+  'schiedam',
+  'lelystad',
+  'alphen aan den rijn',
+  'leidschendam-voorburg',
+  'almelo',
+  'spijkenisse',
+  'hoorn',
+  'gouda',
+  'vlaardingen',
+  'assen',
+  'bergen op zoom',
+  'capelle aan den ijssel',
+  'veenendaal',
+  'katwijk',
+  'zeist',
+  'nieuwegein',
+  'roermond',
+  'den helder',
+  'doetinchem',
+  'hoogeveen',
+  'terneuzen',
+  'middelburg',
+]
+
 const urlList = [
   'startpagina.nl',
   '2link.be',
@@ -108,7 +174,7 @@ const urlList = [
 ]
 
 const removeOneList = [website, 'home']
-const removeAllList = ['wiki']
+const removeAllList = ['wiki', /([A-Z]){4,}/g]
 
 function uncheck(tag) {
   setTimeout(() => {
@@ -275,7 +341,9 @@ for (let row of urlTrs) {
   const textElem = row.querySelector('.nameselector')
   if (textElem) {
     const text = textElem.innerHTML.toLowerCase()
-    if (removeList.some(x => text.search(x) != -1)) {
+    if (removeList.some(x => text.search(x.toLowerCase()) != -1)) {
+      row.querySelector('.btn-warning').click()
+    } else if (exactRemoveList.some(x => text == x.toLowerCase())) {
       row.querySelector('.btn-warning').click()
     } else {
       items++
