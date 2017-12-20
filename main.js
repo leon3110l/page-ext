@@ -22,12 +22,17 @@ const programSettings = {
 
     // Test Settings
     smokeTest: {
-        methodEnabled: false
+        methodEnabled: true
     },
 
     removeOnCode: {
         methodEnabled: true,
         colorAffectedElements: false
+        removeLists: [
+            [],
+            [],
+            [],
+        ]
     },
 };
 
@@ -76,7 +81,10 @@ const paginaMaken = (function (programSettings) {
                                 const text = tag.querySelector('span').innerHTML;
                                 const state = { site: false}
                                 // split the string;
-                                testArray = splitter(text);
+
+                                // testArray = text.split(".")
+                                // testArray = splitter(text);
+                                testArray[0] = text;
 
                                 // if there is only 1 target stop going forward has no purpose
                                 if (testArray.length > 0) {
@@ -103,10 +111,10 @@ const paginaMaken = (function (programSettings) {
                     }
                 })();
             }
-            function splitter(string) {
-                const splittedString = string.split(".");
-                return splittedString;
-            }
+            // function splitter(string) {
+            //     const splittedString = string.split(".");
+            //     return splittedString;
+            // }
 
             function testLooper(arrayOfStr) {
                 let results = "";
@@ -124,17 +132,74 @@ const paginaMaken = (function (programSettings) {
             }
 
             function containsDomainCode(string) {
+                // const removeList = [
+                //     "com",
+                //     "eu",
+                //     "infonu",
+                //     "net",
+                //     "nl",
+                //     "nl:",
+                //     "org",
+                //     "www",
+                //     "be",
+                //     "≥",
+                //     "▷",
+                //     "»",
+                //     "√",
+                //     "ʘ",
+                //     "•",
+                //     "·",
+                //     "'",
+                // ];
+
                 const removeList = [
-                    "com",
-                    "eu",
-                    "infonu",
-                    "net",
-                    "nl",
-                    "nl:",
-                    "org",
-                    "www",
-                    "be",
+                    // "com",
+                    // "eu",
+                    // "infonu",
+                    // "net",
+                    // "nl",
+                    // "nl:",
+                    // "org",
+                    // "www",
+                    // "be",
+
+                    "wikipedia",
+                    "wikipedia.org",
+                    "nl.wikipedia.org",
+                    "nl.wiktionary.org",
+                    "en.wikipedia.org",
+
+                    "≥",
+                    "º",
+                    "▷",
+                    "ᐅ",
+                    "»",
+                    "«",
+                    "√",
+                    "ʘ",
+                    "•",
+                    "·",
+                    "'",
+                    "::",
+                    ",",
+                    ".",
+                    "→",
+                    "@",
+                    "~",
+
+                    "--",
+                    "&gt;",
+                    "&gt;&gt;",
+                    "startpagina",
+                    "home",
+                    "Homepagina",
+                    "Homepage,",
+                    "homepage",
+                    "Startpagina:",
+                    "HomePages®",
+                    "page",
                 ];
+
                 for (var i = 0; i < removeList.length; i++) {
                     if (string.toLowerCase() == removeList[i]) {
                         return true;
@@ -280,10 +345,62 @@ const klaarzetten = (function () {
   ];
 
     // private methods
+    function paginaKlaarZetten1() {
+        const formElements = document.querySelectorAll('#zoeken #pagesettings .form-group');
+
+        if (formElements) {
+            formElements[0].querySelector('input').addEventListener('change', function() {
+                const content = formElements[0].querySelector('input').value;
+
+                /* changes the select*/
+                formElements[1].querySelectorAll('select option')[1].selected = true;
+
+
+                /* loads rubriek*/
+                const rubriek = formElements[2].querySelector('select');
+                const id = formElements[1].querySelector('select').value;
+                sendAjax2(id, rubriek)
+
+                /* changes the meta titel*/
+                console.log(formElements[3].querySelector('input').value = content);
+
+                /* changes the meta titel*/
+                console.log(formElements[4].querySelector('textarea').innerHTML = "alles over " + content);
+            });
+            function sendAjax2(id_l, rubriek) {
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", 'http://51.255.87.34/~pagina/ajax/get_sitecats.php', true);
+
+                //Send the proper header information along with the request
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                xhr.onreadystatechange = function() {//Call a function when the state changes.
+                    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                        console.log(JSON.parse(xhr.responseText))    // Request finished. Do processing here.
+
+                        let response = JSON.parse(xhr.responseText);
+                        rubriek.removeAttribute("disabled")
+                        rubriek.innerHTML = "";
+
+                        let options = "";
+                        for (var i = 0; i < response.length; i++) {
+                            let option = document.createElement("option");
+                            option.setAttribute('value', response[i]);
+                            option.text = response[i];
+                            rubriek.append(option)
+                            console.log (option)
+                        }
+                    }
+                }
+                xhr.send('id=' + id_l)
+            }
+        }
+    };
 
     // filters items list on unwanted items
     function initializeFilterStuff() {
-        const urlTrs = document.querySelectorAll('table#cats tbody tr')
+        let urlTrs = document.querySelectorAll('table#cats tbody tr')
 
         let items = 0
         for (let row of urlTrs) {
@@ -301,11 +418,12 @@ const klaarzetten = (function () {
 
 
         while (items >= 26) {
+            let urlTrs = document.querySelectorAll('table#cats tbody tr')
             let row = urlTrs[Math.floor(Math.random() * items)]
             if (row) {
                 setTimeout(() => {
                     row.querySelector('.btn-warning').click()
-                }, items * 2 + 100)
+                }, items * 1)
                 console.log(items--)
             }
         }
@@ -319,7 +437,7 @@ const klaarzetten = (function () {
             for (let i = 0; i < urlTrs.length; i++) {
                 urlTrs[i].children[0].innerHTML = i + 1;
             }
-        }, 5);
+        }, 2);
     }
 
     // Public items
@@ -329,6 +447,7 @@ const klaarzetten = (function () {
         runScript: function() {
             initializeFilterStuff();
             setNummering();
+            paginaKlaarZetten1();
         },
 
         addEventListener: (function () {
@@ -338,7 +457,7 @@ const klaarzetten = (function () {
                         klaarzetten.runScript()
                     }
                 }
-            }, 1 )
+            }, 1 );
         })(),
 
     };
@@ -352,8 +471,7 @@ const klaarzetten = (function () {
 
  -- auto executes h3 remover onload
  -- auto fires addEventListener onload */
-const addUrlpage = (function () {
-
+const onLoad= (function () {
     return {
 
         eventListener : (function () {
@@ -362,7 +480,7 @@ const addUrlpage = (function () {
                 urlForm.addEventListener('change', () => {
                     const old = urlForm.value
                     urlForm.value = `${old}.uwpagina.nl\r\n${old}.links.nl\r\n${old}.allepaginas.nl\r\n${old}.beginzo.nl\r\n${old}.linkpaginas.nl\r\n${old}.startsleutel.nl\r\n${old}.zoeklink.nl\r\n${old}.eigenstart.nl\r\n`
-                })
+                });
             }
         })(),
 
@@ -375,6 +493,71 @@ const addUrlpage = (function () {
     }
 })();
 
+const paginaKlaarzettenMetaData = (function () {
+    const formElements = document.querySelectorAll('#zoeken #pagesettings .form-group');
+
+    if (formElements) {
+        formElements[0].querySelector('input').addEventListener('change', fillElements);
+
+        window.addEventListener("keyup", function(e) {
+            if (e.shiftKey === true) {
+                if ( e.key.toLowerCase() === "w") {
+                    fillElements();
+                }
+            }
+        }, 1 );
+    }
+
+    function fillElements() {
+        const content = formElements[0].querySelector('input').value;
+
+        /* changes the select*/
+        formElements[1].querySelectorAll('select option')[1].selected = true;
+
+
+        /* loads rubriek*/
+        const rubriek = formElements[2].querySelector('select');
+        const id = formElements[1].querySelector('select').value;
+        sendAjax2(id, rubriek)
+
+        /* changes the meta titel*/
+        console.log(formElements[3].querySelector('input').value = content);
+
+        /* changes the meta titel*/
+        console.log(formElements[4].querySelector('textarea').innerHTML = "alles over " + content);
+
+        alert("hi")
+        formElements[0].querySelector('input').removeEventListener("change", fillElements);
+    }
+
+    function sendAjax2(id_l, rubriek) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", 'http://51.255.87.34/~pagina/ajax/get_sitecats.php', true);
+
+        //Send the proper header information along with the request
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {//Call a function when the state changes.
+            if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                console.log(JSON.parse(xhr.responseText))    // Request finished. Do processing here.
+
+                let response = JSON.parse(xhr.responseText);
+                rubriek.removeAttribute("disabled")
+                rubriek.innerHTML = "";
+
+                let options = "";
+                for (var i = 0; i < response.length; i++) {
+                    let option = document.createElement("option");
+                    option.setAttribute('value', response[i]);
+                    option.text = response[i];
+                    rubriek.append(option)
+                    console.log (option)
+                }
+            }
+        }
+        xhr.send('id=' + id_l)
+    }
+})();
 
 (function smokeTest (settings) {
     if (settings.methodEnabled == true) {
