@@ -17,7 +17,54 @@ const programSettings = {
     },
 
     urlRemover : {
-        functionEnabled: true
+        functionEnabled: true,
+        removeList: [
+            // "com",
+            // "eu",
+            // "infonu",
+            // "net",
+            // "nl",
+            // "nl:",
+            // "org",
+            // "www",
+            // "be",
+
+            "wikipedia",
+            "wikipedia.org",
+            "nl.wikipedia.org",
+            "nl.wiktionary.org",
+            "en.wikipedia.org",
+
+            "≥",
+            "º",
+            "▷",
+            "ᐅ",
+            "»",
+            "«",
+            "√",
+            "ʘ",
+            "•",
+            "·",
+            "'",
+            "::",
+            ",",
+            ".",
+            "→",
+            "@",
+            "~",
+
+            "--",
+            "&gt;",
+            "&gt;&gt;",
+            "startpagina",
+            "home",
+            "Homepagina",
+            "Homepage,",
+            "homepage",
+            "Startpagina:",
+            "HomePages®",
+            "page",
+        ],
     },
 
     // Test Settings
@@ -61,6 +108,7 @@ const paginaMaken = (function (programSettings) {
         --Removes domain names from the page*/
         urlRemover: (function () {
             if (programSettings.urlRemover.functionEnabled) {
+                let removeList = programSettings.urlRemover.removeList;
                 (runScript = function () {
                     let id_pos = [];
                     let value = "";
@@ -84,7 +132,7 @@ const paginaMaken = (function (programSettings) {
                                 if (text.length > 0) {
 
                                     // create a binary removeCode;
-                                    removeCode = testLooper(testArray);
+                                    removeCode = testLooper(testArray, removeList);
 
                                     // Remove elements from array based on binaryCode
                                     testArray = removeOnCode(removeCode, testArray, tag.querySelector('span').style );
@@ -104,17 +152,19 @@ const paginaMaken = (function (programSettings) {
                             }, 1000);
                         }
                     }
+                    alert(programSettings.urlRemover.innerhtml)
                 })();
             }
 
-            function testLooper(arrayOfStr) {
+            function testLooper(arrayOfStr, removeList) {
                 let results = "";
+
 
                 for (var i = 0; i < arrayOfStr.length; i++) {
 
-                    if ( containsDomainCode(arrayOfStr[i]) === true) {
+                    if ( containsDomainCode(arrayOfStr[i], removeList) === true) {
                         results += "1";
-                    } else if ( containsDomainCode(arrayOfStr[i]) === false ) {
+                    } else if ( containsDomainCode(arrayOfStr[i], removeList) === false ) {
                         results += "0";
                     }
                 }
@@ -122,54 +172,7 @@ const paginaMaken = (function (programSettings) {
                 return (results);
             }
 
-            function containsDomainCode(string) {
-                const removeList = [
-                    // "com",
-                    // "eu",
-                    // "infonu",
-                    // "net",
-                    // "nl",
-                    // "nl:",
-                    // "org",
-                    // "www",
-                    // "be",
-
-                    "wikipedia",
-                    "wikipedia.org",
-                    "nl.wikipedia.org",
-                    "nl.wiktionary.org",
-                    "en.wikipedia.org",
-
-                    "≥",
-                    "º",
-                    "▷",
-                    "ᐅ",
-                    "»",
-                    "«",
-                    "√",
-                    "ʘ",
-                    "•",
-                    "·",
-                    "'",
-                    "::",
-                    ",",
-                    ".",
-                    "→",
-                    "@",
-                    "~",
-
-                    "--",
-                    "&gt;",
-                    "&gt;&gt;",
-                    "startpagina",
-                    "home",
-                    "Homepagina",
-                    "Homepage,",
-                    "homepage",
-                    "Startpagina:",
-                    "HomePages®",
-                    "page",
-                ];
+            function containsDomainCode(string, removeList) {
                 for (var i = 0; i < removeList.length; i++) {
                     if (string.toLowerCase() == removeList[i]) {
                         return true;
