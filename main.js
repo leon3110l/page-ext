@@ -234,7 +234,7 @@ while (items >= 26) {
   }
 }
 
-function getRandomArrItems(arr, num = 6) {
+function getRandomArrItems(arr, num = 24) {
   output = []
   for (let i = 0; i < num; i++) {
     output.push(arr[Math.floor(Math.random() * arr.length)])
