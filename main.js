@@ -18,59 +18,109 @@ const programSettings = {
 
     urlRemover : {
         functionEnabled: true,
-        removeList: [
-            // "com",
-            // "eu",
-            // "infonu",
-            // "net",
-            // "nl",
-            // "nl:",
-            // "org",
-            // "www",
-            // "be",
+        removeListWrap: {
+            removeList: [
+                // "com",
+                // "eu",
+                // "infonu",
+                // "net",
+                // "nl",
+                // "nl:",
+                // "org",
+                // "www",
+                // "be",
 
-            "wikipedia",
-            "wikipedia.org",
-            "nl.wikipedia.org",
-            "nl.wiktionary.org",
-            "en.wikipedia.org",
+                "wikipedia",
+                "wikipedia.org",
+                "nl.wikipedia.org",
+                "nl.wiktionary.org",
+                "en.wikipedia.org",
+                "de.wikipedia.org",
 
-            "≥",
-            "º",
-            "▷",
-            "ᐅ",
-            "»",
-            "«",
-            "√",
-            "ʘ",
-            "•",
-            "·",
-            "'",
-            "::",
-            ",",
-            ".",
-            "→",
-            "@",
-            "~",
+                "≥",
+                "º",
+                "▷",
+                "ᐅ",
+                "»",
+                "«",
+                "√",
+                "ʘ",
+                "•",
+                "·",
+                "'",
+                "::",
+                ",",
+                ".",
+                "→",
+                "@",
+                "~",
+                "®",
+                "›",
 
-            "--",
-            "&gt;",
-            "&gt;&gt;",
-            "startpagina",
-            "home",
-            "Homepagina",
-            "Homepage,",
-            "homepage",
-            "Startpagina:",
-            "HomePages®",
-            "page",
-            // "vakantielandbelgie",
-        ],
+                "--",
+                "&gt;",
+                "&gt;&gt;",
+                "startpagina",
+                "home",
+                "homepagina",
+                "homepage,",
+                "homepage",
+                "startpagina:",
+                "homePages®",
+                "page",
+                // "venstersopkatholiekgeloven",
+            ],
+
+            shortIcon: [
+                "≥",
+                "º",
+                "▷",
+                "ᐅ",
+                "»",
+                "«",
+                "√",
+                "ʘ",
+                "•",
+                "·",
+                "'",
+                "::",
+                ",",
+                ".",
+                "→",
+                "@",
+                "~",
+                "®",
+                "›",
+            ],
+
+            longIcons: [
+                "--",
+                "&gt;",
+                "&gt;&gt;",
+            ],
+
+            urlRemove: [
+                "wikipedia",
+                "wikipedia.org",
+                "nl.wikipedia.org",
+                "nl.wiktionary.org",
+                "en.wikipedia.org",
+                "startpagina",
+                "home",
+                "homepagina",
+                "homepage,",
+                "homepage",
+                "startpagina:",
+                "homepages®",
+                "page",
+            ],
+        },
+
     },
 
     // Test Settings
     smokeTest: {
-        methodEnabled: true
+        methodEnabled: false
     },
 
     removeOnCode: {
@@ -110,7 +160,7 @@ const paginaMaken = (function (programSettings) {
         urlRemover: (function () {
             if (programSettings.urlRemover.functionEnabled) {
                 (runScript = function () {
-                    let removeList = programSettings.urlRemover.removeList;
+                    let removeListWrap = programSettings.urlRemover.removeListWrap;
                     let id_pos = [];
                     let value = "";
                     let removeCode = "";
@@ -132,7 +182,7 @@ const paginaMaken = (function (programSettings) {
                                 if (text.length > 0) {
 
                                     // if value is negative stop
-                                    value = TestFunctions(testArray, removeList, tag.querySelector('span').style)
+                                    value = TestFunctions(testArray, removeListWrap, tag.querySelector('span').style)
                                     if (value !== false) {
                                         // replaces the original dom item with the newly computed one
                                         tag.querySelector('span').innerHTML = value;
@@ -150,10 +200,20 @@ const paginaMaken = (function (programSettings) {
                 })();
             }
 
-            function TestFunctions(testArray, removeList, tag) {
+            function TestFunctions(testArray, removeListWrap, tag) {
+                let removeList = removeListWrap.removeList;
+
+                // let shortIcon = removeListWrap.shortIcon;
+                // let longIcon = removeListWrap.longIcon;
+                // let longIcon = removeListWrap.longIcon;
+                // let removeList = removeListWrap.removeList;
+
                 value = "";
+                let returnedObject = {}
+
                 // create a binary removeCode;
-                removeCode = testLooper(testArray, removeList);
+                returnedObject = testLooper(testArray, removeList);
+                removeCode = returnedObject.results;
 
                 // Remove elements from array based on binaryCode
                 testArray = removeOnCode(removeCode, testArray, tag );
@@ -161,23 +221,38 @@ const paginaMaken = (function (programSettings) {
                 // convert the array back to a string
                 value = arrayToString(testArray);
 
-                return value
+
+
+
+
+                //handle end of the testfunctions
+                if (returnedObject.bool === false) {
+                    return returnedObject.bool;
+                } else {
+                    return value
+                }
             }
 
             function testLooper(arrayOfStr, removeList) {
                 let results = "";
-                let res
+                let res;
+                let bool = false;
+                let returnObject = {}
 
                 for (var i = 0; i < arrayOfStr.length; i++) {
                     res = containsDomainCode(arrayOfStr[i], removeList)
                     if (res === true) {
                         results += "1";
+                        bool = true;
                     } else if (res === false ) {
                         results += "0";
                     }
                 }
 
-                return (results);
+                returnObject.results = results;
+                returnObject.bool = bool;
+
+                return (returnObject);
             }
 
             function containsDomainCode(string, removeList) {
@@ -228,8 +303,6 @@ const paginaMaken = (function (programSettings) {
                 }
                 return string;
             }
-
-            // xhr.open('POST', 'http://51.255.87.34/~pagina/ajax/change_tag.php');
 
             function sendAjax(ui, id_pos, value) {
                 const L_ui = ui;
@@ -344,17 +417,20 @@ const klaarzetten = (function () {
 
 
         while (items >= 26) {
-            let row = urlTrs[Math.floor(Math.random() * items)]
+            let randomNr = Math.floor(Math.random() * items)
+            let row = urlTrs[randomNr]
             if (row) {
                 setTimeout(() => {
                     row.querySelector('.btn-warning').click()
-                }, 50)
-                urlTrs.splice(row, 1)
+                    setTimeout(function () {
+                        urlTrs.splice(randomNr, 1)
+                    }, items * 0.05);
+                }, items * 0.1)
+
                 console.log(items--)
             }
         }
     }
-
 
     function setNummering() {
         let urlTrs = document.querySelectorAll('table#cats tbody tr')
@@ -363,7 +439,7 @@ const klaarzetten = (function () {
             for (let i = 0; i < urlTrs.length; i++) {
                 urlTrs[i].children[0].innerHTML = i + 1;
             }
-        }, 5);
+        }, 200);
     }
 
     // Public items
@@ -445,7 +521,8 @@ const paginaKlaarzettenMetaData = (function () {
         console.log(formElements[3].querySelector('input').value = content);
 
         /* changes the meta titel*/
-        console.log(formElements[4].querySelector('textarea').innerHTML = "alles over " + content);
+        formElements[4].querySelector('textarea').innerHTML = "alles over ";
+        formElements[4].querySelector('textarea').innerHTML += content;
 
         formElements[0].querySelector('input').removeEventListener('change', handler);
     };
