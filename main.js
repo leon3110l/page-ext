@@ -64,6 +64,7 @@ const programSettings = {
             "Startpagina:",
             "HomePages®",
             "page",
+            // "vakantielandbelgie",
         ],
     },
 
@@ -108,11 +109,10 @@ const paginaMaken = (function (programSettings) {
         --Removes domain names from the page*/
         urlRemover: (function () {
             if (programSettings.urlRemover.functionEnabled) {
-                let removeList = programSettings.urlRemover.removeList;
                 (runScript = function () {
+                    let removeList = programSettings.urlRemover.removeList;
                     let id_pos = [];
                     let value = "";
-
                     let removeCode = "";
 
                     for (let tableRow of tableRows) {
@@ -131,40 +131,48 @@ const paginaMaken = (function (programSettings) {
                                 // if there is only 1 target stop going forward has no purpose
                                 if (text.length > 0) {
 
-                                    // create a binary removeCode;
-                                    removeCode = testLooper(testArray, removeList);
+                                    // if value is negative stop
+                                    value = TestFunctions(testArray, removeList, tag.querySelector('span').style)
+                                    if (value !== false) {
+                                        // replaces the original dom item with the newly computed one
+                                        tag.querySelector('span').innerHTML = value;
+                                        tag.querySelector('input').value = value;
 
-                                    // Remove elements from array based on binaryCode
-                                    testArray = removeOnCode(removeCode, testArray, tag.querySelector('span').style );
+                                        const ui = document.querySelector('input.hidden').value;
 
-                                    // convert the array back to a string
-                                    value = arrayToString(testArray);
-
-                                    // replaces the original dom item with the newly computed one
-                                    tag.querySelector('span').innerHTML = value;
-                                    tag.querySelector('input').value = value;
-
-                                    const ui = document.querySelector('input.hidden').value;
-
-                                    let id_pos = tag.id.split("_");
-                                    sendAjax(ui, id_pos, value)
+                                        let id_pos = tag.id.split("_");
+                                        sendAjax(ui, id_pos, value);
+                                    }
                                 }
                             }, 1000);
                         }
                     }
-                    alert(programSettings.urlRemover.innerhtml)
                 })();
+            }
+
+            function TestFunctions(testArray, removeList, tag) {
+                value = "";
+                // create a binary removeCode;
+                removeCode = testLooper(testArray, removeList);
+
+                // Remove elements from array based on binaryCode
+                testArray = removeOnCode(removeCode, testArray, tag );
+
+                // convert the array back to a string
+                value = arrayToString(testArray);
+
+                return value
             }
 
             function testLooper(arrayOfStr, removeList) {
                 let results = "";
-
+                let res
 
                 for (var i = 0; i < arrayOfStr.length; i++) {
-
-                    if ( containsDomainCode(arrayOfStr[i], removeList) === true) {
+                    res = containsDomainCode(arrayOfStr[i], removeList)
+                    if (res === true) {
                         results += "1";
-                    } else if ( containsDomainCode(arrayOfStr[i], removeList) === false ) {
+                    } else if (res === false ) {
                         results += "0";
                     }
                 }
@@ -199,7 +207,7 @@ const paginaMaken = (function (programSettings) {
                         }
                         else if (removeCodeArray[i] == '0') {
                             if (programSettings.removeOnCode.testlog0) {
-                                console.log(0)
+                                console.log(0);
                             }
                         } else {
                             alert("removeCodeBroke");
@@ -224,7 +232,6 @@ const paginaMaken = (function (programSettings) {
             // xhr.open('POST', 'http://51.255.87.34/~pagina/ajax/change_tag.php');
 
             function sendAjax(ui, id_pos, value) {
-
                 const L_ui = ui;
                 const L_id = id_pos[0];
                 const L_pos = id_pos[1];
