@@ -335,31 +335,29 @@ if (voor) {
   voor.dispatchEvent(new Event('change', { bubbles: true })) // or it won't fire event
 }
 
-const urlTrs = document.querySelectorAll('table tbody tr')
-let items = 0
+const urlTrs = Array.from(document.querySelectorAll('table.bdtable tbody tr'))
 for (let row of urlTrs) {
   const textElem = row.querySelector('.nameselector')
   if (textElem) {
     const text = textElem.innerHTML.toLowerCase()
-    if (removeList.some(x => text.search(x.toLowerCase()) != -1)) {
+    if (removeList.some(x => text.search(x) != -1)) {
       row.querySelector('.btn-warning').click()
     } else if (exactRemoveList.some(x => text == x.toLowerCase())) {
       row.querySelector('.btn-warning').click()
-    } else {
-      items++
     }
   }
 }
 
-while (items >= 26) {
-  const index = Math.floor(Math.random() * items)
+while (urlTrs.length >= 26) {
+  const index = Math.floor(Math.random() * urlTrs.length)
   let row = urlTrs[index]
+  urlTrs.splice(index, 1)
   if (row) {
+    console.log(row)
     row.querySelector('.btn-warning').click()
-    items--
-    urlTrs.splice(index, 1)
   }
 }
+
 
 function getRandomArrItems(arr, num = 24) {
   output = []
