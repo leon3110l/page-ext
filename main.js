@@ -336,19 +336,29 @@ if (voor) {
 }
 
 const urlTrs = Array.from(document.querySelectorAll('table.bdtable tbody tr'))
-for (let row of urlTrs) {
+urlTrs.forEach((row, index) => {
   const textElem = row.querySelector('.nameselector')
   if (textElem) {
     const text = textElem.innerHTML.toLowerCase()
     if (removeList.some(x => text.search(x) != -1)) {
+      console.log(row)
       row.querySelector('.btn-warning').click()
+      urlTrs.splice(index, 1)
+      console.log(urlTrs.length, "remove")
+
+
     } else if (exactRemoveList.some(x => text == x.toLowerCase())) {
       row.querySelector('.btn-warning').click()
+      console.log(urlTrs.length, "exact")
+      urlTrs.splice(index, 1)
+
+
     }
   }
-}
-
+})
+console.log(urlTrs.length)
 while (urlTrs.length >= 26) {
+  console.log(urlTrs.length)
   const index = Math.floor(Math.random() * urlTrs.length)
   let row = urlTrs[index]
   urlTrs.splice(index, 1)
