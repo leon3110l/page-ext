@@ -87,19 +87,19 @@ const exactRemoveList = [
   'hoogeveen',
   'terneuzen',
   'middelburg',
-  "media",
-  "muziek",
-  "reizen",
-  "boot",
-  "landen",
-  "boten",
-  "boeken",
-  "antiek",
-  "gerelateerd",
-  "sport",
-  "webcams",
-  "werken",
-  "sport"
+  'media',
+  'muziek',
+  'reizen',
+  'boot',
+  'landen',
+  'boten',
+  'boeken',
+  'antiek',
+  'gerelateerd',
+  'sport',
+  'webcams',
+  'werken',
+  'sport',
 ]
 
 const urlList = [
@@ -187,7 +187,7 @@ const urlList = [
 ]
 
 const removeOneList = [website, 'home']
-const removeAllList = ['wiki', /([A-Z]){4,}/g, "youtube", "facebook", "twitter"]
+const removeAllList = ['wiki', /([A-Z]){4,}/g, 'youtube', 'facebook', 'twitter']
 
 function uncheck(tag) {
   setTimeout(() => {
@@ -218,7 +218,7 @@ const tables = document.querySelectorAll('#urlform table')
 
 tables.forEach(table => {
   const tags = table.querySelectorAll('tbody tr td ul li')
-  tags.forEach(tag => {
+  tags.forEach((tag, i) => {
     const text = tag.querySelector('span').innerHTML.toLowerCase()
 
     // removeOne
@@ -246,6 +246,24 @@ tables.forEach(table => {
     }
   })
 })
+// remove ending or beginning remCharacters
+for (let i = 0; i < 3; i++) {
+  // do three passes
+  tables.forEach(table => {
+    const rows = table.querySelectorAll('tbody tr td ul')
+    rows.forEach((row, i) => {
+      const items = row.querySelectorAll('li:not(.redbg) span')
+
+      if (items[0].innerHTML.search(remCharacters) > -1) {
+        removeOne(items[0].parentElement)
+      }
+
+      if (items[items.length - 1].innerHTML.search(remCharacters) > -1) {
+        removeOne(items[items.length - 1].parentElement)
+      }
+    })
+  })
+}
 
 const checkboxes = Array.from(
   document.querySelectorAll(
@@ -349,7 +367,7 @@ if (voor) {
 }
 
 const urlTrs = Array.from(document.querySelectorAll('table.bdtable tbody tr'))
-for(let i = 0; i < 5; i++) {
+for (let i = 0; i < 5; i++) {
   urlTrs.forEach((row, index) => {
     const textElem = row.querySelector('.nameselector')
     if (textElem) {
@@ -358,15 +376,11 @@ for(let i = 0; i < 5; i++) {
         console.log(row)
         row.querySelector('.btn-warning').click()
         urlTrs.splice(index, 1)
-        console.log(urlTrs.length, "remove")
-
-
+        console.log(urlTrs.length, 'remove')
       } else if (exactRemoveList.some(x => text == x.toLowerCase())) {
         row.querySelector('.btn-warning').click()
-        console.log(urlTrs.length, "exact")
+        console.log(urlTrs.length, 'exact')
         urlTrs.splice(index, 1)
-
-
       }
     }
   })
@@ -382,7 +396,6 @@ while (urlTrs.length >= 26) {
     row.querySelector('.btn-warning').click()
   }
 }
-
 
 function getRandomArrItems(arr, num = 24) {
   output = []
