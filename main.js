@@ -1,3 +1,6 @@
+// similarity percentage
+const SIMILARITY = 0.85
+
 // specifies when a thing ends
 const endCharacters = /([:.?!])/g
 // specifies the stuff to take out
@@ -18,6 +21,72 @@ const removeList = [
   'e.o.',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
+]
+
+const exactRemoveList = [
+  'amsterdam',
+  'rotterdam',
+  'den haag',
+  'utrecht',
+  'eindhoven',
+  'tilburg',
+  'groningen',
+  'almere',
+  'breda',
+  'nijmegen',
+  'enschede',
+  'apeldoorn',
+  'haarlem',
+  'amersfoort',
+  'zaanstad',
+  'arnhem',
+  'haarlemmermeer',
+  "'s hertogenbosch",
+  'zoetermeer',
+  'zwolle',
+  'maastricht',
+  'leiden',
+  'dordrecht',
+  'ede',
+  'emmen',
+  'westland',
+  'venlo',
+  'delft',
+  'deventer',
+  'leeuwarden',
+  'alkmaar',
+  'sittard-geleen',
+  'helmond',
+  'heerlen',
+  'hilversum',
+  'oss',
+  'amstelveen',
+  'súdwest-fryslân',
+  'hengelo',
+  'purmerend',
+  'roosendaal',
+  'schiedam',
+  'lelystad',
+  'alphen aan den rijn',
+  'leidschendam-voorburg',
+  'almelo',
+  'spijkenisse',
+  'hoorn',
+  'gouda',
+  'vlaardingen',
+  'assen',
+  'bergen op zoom',
+  'capelle aan den ijssel',
+  'veenendaal',
+  'katwijk',
+  'zeist',
+  'nieuwegein',
+  'roermond',
+  'den helder',
+  'doetinchem',
+  'hoogeveen',
+  'terneuzen',
+  'middelburg',
 ]
 
 const urlList = [
@@ -105,7 +174,7 @@ const urlList = [
 ]
 
 const removeOneList = [website, 'home']
-const removeAllList = ['wiki']
+const removeAllList = ['wiki', /([A-Z]){4,}/g]
 
 function uncheck(tag) {
   setTimeout(() => {
@@ -182,14 +251,70 @@ if (tables.length > 0) {
   counterElem.style =
     'position: fixed; top: 1.5em; right: 1.5em; font-size: 3rem; background: #fff; text-align: center; padding: 0.5rem 1rem;'
   document.body.appendChild(counterElem)
-  counter()
-}
-function counter() {
-  counterElem.innerHTML = checkboxes.filter(x => x.checked).length
-  requestAnimationFrame(counter)
+  validator()
 }
 
-// klaar zetten
+function validator() {
+  counterElem.innerHTML = checkboxes.filter(x => x.checked).length // update counter
+
+  // doubles check
+  tables.forEach(table => {
+    const rows = table.querySelectorAll('tbody tr td ul')
+    const links = []
+    rows.forEach((row, i) => {
+      if (
+        row.parentElement.parentElement.querySelector(`input[type="checkbox"]`)
+          .checked
+      ) {
+        const text = Array.from(row.querySelectorAll('li:not(.redbg) span'))
+          .map(x => x.innerHTML)
+          .reduce((p, n) => ` ${p} ${n}`, '')
+          .trim()
+          .toLowerCase()
+
+        // if is not needed, but if someone fackes up it doesn't stop
+        if (text != '') {
+          links.push({
+            text,
+            i,
+            matched: false,
+          })
+        }
+      } else {
+        row.parentElement.style.border = ''
+      }
+    })
+    links.forEach(x => {
+      links.filter(f => f.i != x.i).forEach(y => {
+        if (similarity(y.text, x.text) > SIMILARITY) {
+          x.matched = y.matched = true
+          rows[y.i].parentElement.style.border = rows[
+            x.i
+          ].parentElement.style.border =
+            '5px solid red'
+        }
+
+        if (!x.matched) {
+          rows[x.i].parentElement.style.border = ''
+        }
+        if (!y.matched) {
+          rows[y.i].parentElement.style.border = ''
+        }
+      })
+    })
+  })
+
+  requestAnimationFrame(validator)
+}
+
+/*
+ *
+ *
+ *
+ *
+ *
+ * klaar zetten
+*/
 const urlForm = document.querySelector('textarea[name="urls"]')
 if (urlForm) {
   urlForm.addEventListener('change', () => {
@@ -207,7 +332,7 @@ if (h3Selector) {
 const voor = document.querySelector('select#voor')
 if (voor) {
   voor.selectedIndex = 1
-  voor.dispatchEvent(new Event('change', { bubbles: true }))
+  voor.dispatchEvent(new Event('change', { bubbles: true })) // or it won't fire event
 }
 
 const urlTrs = document.querySelectorAll('table tbody tr')
@@ -216,7 +341,9 @@ for (let row of urlTrs) {
   const textElem = row.querySelector('.nameselector')
   if (textElem) {
     const text = textElem.innerHTML.toLowerCase()
-    if (removeList.some(x => text.search(x) != -1)) {
+    if (removeList.some(x => text.search(x.toLowerCase()) != -1)) {
+      row.querySelector('.btn-warning').click()
+    } else if (exactRemoveList.some(x => text == x.toLowerCase())) {
       row.querySelector('.btn-warning').click()
     } else {
       items++
@@ -225,19 +352,66 @@ for (let row of urlTrs) {
 }
 
 while (items >= 26) {
-  let row = urlTrs[Math.floor(Math.random() * items)]
+  const index = Math.floor(Math.random() * items)
+  let row = urlTrs[index]
   if (row) {
-    setTimeout(() => {
-      row.querySelector('.btn-warning').click()
-    }, items * 2 + 100)
+    row.querySelector('.btn-warning').click()
     items--
+    urlTrs.splice(index, 1)
   }
 }
 
 function getRandomArrItems(arr, num = 24) {
   output = []
+  const used = []
   for (let i = 0; i < num; i++) {
-    output.push(arr[Math.floor(Math.random() * arr.length)])
+    let num
+    // remove doubles
+    while (used.some(x => x === num)) {
+      num = Math.floor(Math.random() * arr.length)
+    }
+    output.push(arr[num])
+    used.push(num)
   }
   return output
+}
+
+function similarity(s1, s2) {
+  var longer = s1
+  var shorter = s2
+  if (s1.length < s2.length) {
+    longer = s2
+    shorter = s1
+  }
+  var longerLength = longer.length
+  if (longerLength == 0) {
+    return 1.0
+  }
+  return (
+    (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength)
+  )
+}
+
+function editDistance(s1, s2) {
+  s1 = s1.toLowerCase()
+  s2 = s2.toLowerCase()
+
+  var costs = new Array()
+  for (var i = 0; i <= s1.length; i++) {
+    var lastValue = i
+    for (var j = 0; j <= s2.length; j++) {
+      if (i == 0) costs[j] = j
+      else {
+        if (j > 0) {
+          var newValue = costs[j - 1]
+          if (s1.charAt(i - 1) != s2.charAt(j - 1))
+            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1
+          costs[j - 1] = lastValue
+          lastValue = newValue
+        }
+      }
+    }
+    if (i > 0) costs[s2.length] = lastValue
+  }
+  return costs[s2.length]
 }
