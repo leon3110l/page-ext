@@ -87,6 +87,19 @@ const exactRemoveList = [
   'hoogeveen',
   'terneuzen',
   'middelburg',
+  "media",
+  "muziek",
+  "reizen",
+  "boot",
+  "landen",
+  "boten",
+  "boeken",
+  "antiek",
+  "gerelateerd",
+  "sport",
+  "webcams",
+  "werken",
+  "sport"
 ]
 
 const urlList = [
