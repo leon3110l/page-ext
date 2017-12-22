@@ -138,6 +138,13 @@ const exactRemoveList = [
   'lastminutes',
   'autorijden',
   'aanraders',
+  'magazines (online)',
+  'magazines',
+  'magazine',
+  'online kopen',
+  'online',
+  'er op uit!',
+  'er op uit'
 ]
 
 const urlList = [
