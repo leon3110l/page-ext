@@ -30,8 +30,6 @@ const removeList = [
   /[^a-z /][ - ]/g,
 ]
 
-console.log(removeList)
-
 const exactRemoveList = [
   'amsterdam',
   'rotterdam',
