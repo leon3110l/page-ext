@@ -24,6 +24,8 @@ const removeList = [
   'wiki',
   'regio ',
   'netnr ',
+  'dochter',
+  'gerelat',
   '?',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
