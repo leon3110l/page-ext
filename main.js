@@ -21,6 +21,7 @@ const removeList = [
   'e.o.',
   'ov',
   'openbaar vervoer',
+  'wiki',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
@@ -129,7 +130,7 @@ const exactRemoveList = [
   'kleding',
   'feest',
   'party',
-  'feest en party'
+  'feest en party',
 ]
 
 const urlList = [
