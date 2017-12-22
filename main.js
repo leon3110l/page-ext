@@ -247,23 +247,23 @@ tables.forEach(table => {
   })
 })
 // remove ending or beginning remCharacters
-for (let i = 0; i < 3; i++) {
-  // do three passes
-  tables.forEach(table => {
-    const rows = table.querySelectorAll('tbody tr td ul')
-    rows.forEach((row, i) => {
-      const items = row.querySelectorAll('li:not(.redbg) span')
+// for (let i = 0; i < 3; i++) {
+//   // do three passes
+//   tables.forEach(table => {
+//     const rows = table.querySelectorAll('tbody tr td ul')
+//     rows.forEach((row, i) => {
+//       const items = row.querySelectorAll('li:not(.redbg) span')
 
-      if (items[0].innerHTML.search(remCharacters) > -1) {
-        removeOne(items[0].parentElement)
-      }
+//       if (items[0].innerHTML.search(remCharacters) > -1) {
+//         removeOne(items[0].parentElement)
+//       }
 
-      if (items[items.length - 1].innerHTML.search(remCharacters) > -1) {
-        removeOne(items[items.length - 1].parentElement)
-      }
-    })
-  })
-}
+//       if (items[items.length - 1].innerHTML.search(remCharacters) > -1) {
+//         removeOne(items[items.length - 1].parentElement)
+//       }
+//     })
+//   })
+// }
 
 const checkboxes = Array.from(
   document.querySelectorAll(
