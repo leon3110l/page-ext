@@ -25,7 +25,6 @@ const removeList = [
   'wiki',
   'regio ',
   'netnr ',
-  'dochter',
   'gerelat',
   '?',
   / [0 - 9] /g,
@@ -454,7 +453,6 @@ for (let i = 0; i < 5; i++) {
     if (textElem) {
       const text = textElem.innerHTML.toLowerCase()
       if (removeList.some(x => text.search(x) > -1)) {
-        console.log(row)
         row.querySelector('.btn-warning').click()
         urlTrs.splice(index, 1)
         console.log(urlTrs.length, 'remove')
