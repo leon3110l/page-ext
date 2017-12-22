@@ -19,6 +19,8 @@ const removeList = [
   'zoekmachine',
   'site',
   'e.o.',
+  'ov',
+  'openbaar vervoer',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
@@ -100,6 +102,14 @@ const exactRemoveList = [
   'webcams',
   'werken',
   'sport',
+  'discussie',
+  'forum',
+  'veiligheid',
+  'vacatures',
+  'doe het zelf',
+  'diy',
+  'aanbod',
+  'financieel'
 ]
 
 const urlList = [
@@ -187,7 +197,7 @@ const urlList = [
 ]
 
 const removeOneList = [website, 'home']
-const removeAllList = ['wiki', /([A-Z]){4,}/g, 'youtube', 'facebook', 'twitter', 'encyclo', 'definitie', 'betekenis', 'vertaling', 'nu.nl', 'ad.nl', 'pen.nl', 'telegraaf.nl', 'rtv']
+const removeAllList = ['wiki', /([A-Z]){4,}/g, 'youtube', 'facebook', 'twitter', 'encyclo', 'definitie', 'betekenis', 'vertaling', 'nu.nl', 'ad.nl', 'pen.nl', 'telegraaf.nl', 'rtv', '9292']
 
 function uncheck(tag) {
   setTimeout(() => {
