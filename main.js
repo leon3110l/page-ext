@@ -147,6 +147,8 @@ const exactRemoveList = [
   'er op uit',
   'geschiedenis',
   'jargon',
+  'review',
+  'reviews',
 ]
 
 const urlList = [
