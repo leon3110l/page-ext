@@ -162,7 +162,7 @@ const exactRemoveList = [
   'onderhoud',
   'tijdschriften',
   'training',
-  'speciaalzaken'
+  'speciaalzaken',
 ]
 
 const urlList = [
