@@ -31,7 +31,7 @@ const removeList = [
   /[^a-z /][ - ]/g,
 ]
 
-console.log(removeList);
+console.log(removeList)
 
 const exactRemoveList = [
   'amsterdam',
@@ -454,6 +454,7 @@ for (let i = 0; i < 5; i++) {
     const textElem = row.querySelector('.nameselector')
     if (textElem) {
       const text = textElem.innerHTML.toLowerCase()
+      console.log(index);
       if (removeList.some(x => text.search(x) > -1)) {
         row.querySelector('.btn-warning').click()
         urlTrs.splice(index, 1)
