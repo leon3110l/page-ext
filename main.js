@@ -109,7 +109,12 @@ const exactRemoveList = [
   'doe het zelf',
   'diy',
   'aanbod',
-  'financieel'
+  'financieel',
+  'internet',
+  'internet winkels',
+  'online winkels',
+  'online shop',
+  'internet online'
 ]
 
 const urlList = [
