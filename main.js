@@ -125,7 +125,11 @@ const exactRemoveList = [
   'info en nieuws',
   'info',
   'nieuws',
-  'zoeken'
+  'zoeken',
+  'kleding',
+  'feest',
+  'party',
+  'feest en party'
 ]
 
 const urlList = [
