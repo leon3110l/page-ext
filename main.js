@@ -144,7 +144,9 @@ const exactRemoveList = [
   'online kopen',
   'online',
   'er op uit!',
-  'er op uit'
+  'er op uit',
+  'geschiedenis',
+  'jargon',
 ]
 
 const urlList = [
