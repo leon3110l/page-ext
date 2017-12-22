@@ -22,6 +22,8 @@ const removeList = [
   'ov',
   'openbaar vervoer',
   'wiki',
+  'regio ',
+  'netnr ',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
@@ -131,6 +133,11 @@ const exactRemoveList = [
   'feest',
   'party',
   'feest en party',
+  'zeilen',
+  'zaken doen',
+  'lastminutes',
+  'autorijden',
+  'aanraders',
 ]
 
 const urlList = [
@@ -403,7 +410,7 @@ for (let i = 0; i < 5; i++) {
     const textElem = row.querySelector('.nameselector')
     if (textElem) {
       const text = textElem.innerHTML.toLowerCase()
-      if (removeList.some(x => text.search(x) != -1)) {
+      if (removeList.some(x => text.search(x) > -1)) {
         console.log(row)
         row.querySelector('.btn-warning').click()
         urlTrs.splice(index, 1)
