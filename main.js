@@ -163,6 +163,9 @@ const exactRemoveList = [
   'training',
   'speciaalzaken',
   'boeken en tijdschriften',
+  'partners',
+  'partner',
+  'documentatie',
 ]
 
 const urlList = [
