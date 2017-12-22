@@ -89,6 +89,10 @@ const exactRemoveList = [
   'hoogeveen',
   'terneuzen',
   'middelburg',
+  'drente',
+  'den bosch',
+  'friesland',
+  'limburg',
   'media',
   'muziek',
   'reizen',
@@ -114,7 +118,14 @@ const exactRemoveList = [
   'internet winkels',
   'online winkels',
   'online shop',
-  'internet online'
+  'internet online',
+  'ontslag',
+  'het weer',
+  'buitenland',
+  'info en nieuws',
+  'info',
+  'nieuws',
+  'zoeken'
 ]
 
 const urlList = [
