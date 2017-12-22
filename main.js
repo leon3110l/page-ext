@@ -1,3 +1,4 @@
+try {
 // similarity percentage
 const SIMILARITY = 0.85
 
@@ -163,6 +164,7 @@ const exactRemoveList = [
   'tijdschriften',
   'training',
   'speciaalzaken',
+  'boeken en tijdschriften',
 ]
 
 const urlList = [
@@ -250,7 +252,23 @@ const urlList = [
 ]
 
 const removeOneList = [website, 'home']
-const removeAllList = ['wiki', /([A-Z]){4,}/g, 'youtube', 'facebook', 'twitter', 'encyclo', 'definitie', 'betekenis', 'vertaling', 'nu.nl', 'ad.nl', 'pen.nl', 'telegraaf.nl', 'rtv', '9292']
+const removeAllList = [
+  'wiki',
+  /([A-Z]){4,}/g,
+  'youtube',
+  'facebook',
+  'twitter',
+  'encyclo',
+  'definitie',
+  'betekenis',
+  'vertaling',
+  'nu.nl',
+  'ad.nl',
+  'pen.nl',
+  'telegraaf.nl',
+  'rtv',
+  '9292',
+]
 
 function uncheck(tag) {
   setTimeout(() => {
@@ -513,4 +531,7 @@ function editDistance(s1, s2) {
     if (i > 0) costs[s2.length] = lastValue
   }
   return costs[s2.length]
+}
+} catch(error) {
+  console.log(error)
 }
