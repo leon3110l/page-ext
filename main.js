@@ -187,7 +187,7 @@ const urlList = [
 ]
 
 const removeOneList = [website, 'home']
-const removeAllList = ['wiki', /([A-Z]){4,}/g, 'youtube', 'facebook', 'twitter']
+const removeAllList = ['wiki', /([A-Z]){4,}/g, 'youtube', 'facebook', 'twitter', 'encyclo', 'definitie', 'betekenis', 'vertaling']
 
 function uncheck(tag) {
   setTimeout(() => {
