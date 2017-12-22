@@ -26,7 +26,7 @@ const removeList = [
   'regio ',
   'netnr ',
   'gerelat',
-  / [0 - 9] /g,
+  / [0 - 9]/g,
   /[^a-z /][ - ]/g,
 ]
 
