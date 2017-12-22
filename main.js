@@ -24,6 +24,7 @@ const removeList = [
   'wiki',
   'regio ',
   'netnr ',
+  '?',
   / [0 - 9] /g,
   /[^a-z /][ - ]/g,
 ]
@@ -149,6 +150,17 @@ const exactRemoveList = [
   'jargon',
   'review',
   'reviews',
+  'begrippen',
+  'achtergrond informatie',
+  'informatie',
+  'info',
+  'reclame',
+  'accesoires',
+  'merken',
+  'onderhoud',
+  'tijdschriften',
+  'training',
+  'speciaalzaken'
 ]
 
 const urlList = [
