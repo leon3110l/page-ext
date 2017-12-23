@@ -1,109 +1,3 @@
-    /*****************
-     Program Settings
-    *****************/
-    const programSettings = {
-
-        // linkColourer
-        linkColourer: {
-            methodEnabled: true,
-
-            red: true,
-            orange: false,
-            yellow: false
-        },
-
-        arrayToString: {
-            addDot: false
-        },
-
-        smokeTest: {
-            methodEnabled: false
-        },
-
-        removeOnCode: {
-            methodEnabled: true,
-            colorAffectedElements: false,
-            testlog0: false,
-            testlog1: false
-        },
-
-        urlRemover: {
-            functionEnabled: true,
-            ajaxEnabled: true,
-            testColoring: false,
-            clearVisibleContent: false,
-            removeListWrap: {
-                shortIcons: [
-                    "≥",
-                    "º",
-                    "▷",
-                    "ᐅ",
-                    "»",
-                    "«",
-                    "√",
-                    "ʘ",
-                    "•",
-                    "·",
-                    "'",
-                    "::",
-                    ",",
-                    ".",
-                    "→",
-                    "@",
-                    "~",
-                    "®",
-                    "›",
-                ],
-
-                longIcons: [
-                    "--",
-                    "&gt;",
-                    "&gt;&gt;",
-                ],
-
-                words: [
-                    "home",
-                    "homepagina",
-                    "homepage,",
-                    "homepage",
-                    "startpagina:",
-                    "homepages®",
-                    "page",
-                    "links",
-                    "blog",
-                ],
-
-                isBetweenDots: [
-                    "startpagina",
-                    "wikipedia",
-                    "facebook",
-                    "twitter",
-                    "linkedin",
-                ],
-
-                urls: [
-                    "com",
-                    "eu",
-                    "infonu",
-                    "net",
-                    "nl",
-                    "nl:",
-                    "org",
-                    "www",
-                    "be",
-                    "nu",
-                    "info"
-                ],
-
-                contains: [
-                    "facebook",
-                    "twitter",
-                    "linkedin",
-                ],
-            }
-        },
-    };
-
 try {
     /*-----------------------
      Start of the singletons
@@ -394,229 +288,45 @@ try {
         }
     })(programSettings);
 
-    /*
-      ----------------------
-      klaar zetten singleton
-      ----------------------
-
-     -- is called by a eventlistener
-     -- has all needed properties nested inside */
-    const klaarzetten = (function () {
-
-        //private properties
-        const removeList = [
-          'algeme',
-          'link',
-          'adver',
-          'pagina',
-          'forum',
-          'over',
-          'diver',
-          'zoekmachine',
-          'dochter',
-          'wikipedia',
-          'facebook',
-          'twitter',
-          'linkedin',
-          / [0 - 9] /g,
-          /[^a-z /][ - ]/g,
-      ];
-
-        // private methods
-
-        // filters items list on unwanted items
-        function initializeFilterStuff() {
-            let urlTrs = document.querySelectorAll('table#cats tbody tr');
-
-            let items = 0
-            for (let row of urlTrs) {
-                const textElem = row.querySelector('.nameselector');
-                if (textElem) {
-                    const text = textElem.innerHTML.toLowerCase()
-                    if (removeList.some(x => text.search(x) != -1)) {
-                        row.querySelector('.btn-warning').click()
-                    } else {
-                        items++
-                    }
-                }
-            }
 
 
-            while (items >= 26) {
-                let randomNr = Math.floor(Math.random() * items)
-                let row = urlTrs[randomNr]
-                if (row) {
-                    setTimeout(() => {
-                        row.querySelector('.btn-warning').click()
-                        setTimeout(function () {
-                            urlTrs.splice(randomNr, 1)
-                        }, items * 0.05);
-                    }, items * 0.1)
-
-                    console.log(items--)
-                }
-            }
-        }
-
-        function setNummering() {
-            let urlTrs = document.querySelectorAll('table#cats tbody tr')
-
-            setTimeout(() => {
-                for (let i = 0; i < urlTrs.length; i++) {
-                    urlTrs[i].children[0].innerHTML = i + 1;
-                }
-            }, 200);
-        }
-
-        // Public items
-        return {
-            items: -1,
-
-            runScript: function() {
-                initializeFilterStuff();
-                setNummering();
-            },
-
-            addEventListener: (function () {
-                window.addEventListener("keyup", function(e) {
-                    if (e.shiftKey === true) {
-                        if ( e.key.toLowerCase() === "d") {
-                            klaarzetten.runScript();
-                        }
-                    }
-                }, 1 );
-            })(),
-        };
-    })();
-
-
-    /*
-     ---------------------
-     singleton addUrlpage
-     ---------------------
-
-     -- auto executes h3 remover onload
-     -- auto fires addEventListener onload */
-    const addUrlpage = (function () {
-
-        return {
-            eventListener : (function () {
-                const urlForm = document.querySelector('textarea[name="urls"]')
-                if (urlForm) {
-                    urlForm.addEventListener('change', () => {
-                        const old = urlForm.value
-                        urlForm.value = `${old}.uwpagina.nl\r\n${old}.links.nl\r\n${old}.allepaginas.nl\r\n${old}.beginzo.nl\r\n${old}.linkpaginas.nl\r\n${old}.startsleutel.nl\r\n${old}.zoeklink.nl\r\n${old}.eigenstart.nl\r\n`
-                    });
-                }
-            })(),
-
-            h3Unchecker :  (function () {
-                const h3Selector = document.querySelector('input[value="h3"]')
-                if (h3Selector) {
-                  h3Selector.checked = false
-                }
-            })()
-        }
-    })();
-
-    const paginaKlaarzettenMetaData = (function () {
-        const formElements = document.querySelectorAll('#zoeken #pagesettings .form-group');
-        if (formElements) {
-            window.addEventListener("keyup", function(e) {
-                if (e.shiftKey === true) {
-                    if ( e.key.toLowerCase() === "d") {
-                        fillElements(formElements)
-                    }
-                }
-            }, 1 );
-        }
-
-        function fillElements(formElements) {
-            const content = formElements[0].querySelector('input').value;
-
-            /* changes the select*/
-            formElements[1].querySelectorAll('select option')[1].selected = true;
-
-            /* loads rubriek*/
-            const rubriek = formElements[2].querySelector('select');
-            const id = formElements[1].querySelector('select').value;
-            sendAjax2(id, rubriek)
-
-            /* changes the meta titel*/
-            formElements[3].querySelector('input').value = content;
-
-            /* changes the meta titel*/
-            formElements[4].querySelector('textarea').value = "alles over ";
-            formElements[4].querySelector('textarea').value += content;
-
-            formElements[0].querySelector('input').removeEventListener('change', handler);
-        };
-
-        function sendAjax2(id_l, rubriek) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", 'http://51.255.87.34/~pagina/ajax/get_sitecats.php', true);
-
-            //Send the proper header information along with the request
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-            xhr.onreadystatechange = function() {//Call a function when the state changes.
-                if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                    JSON.parse(xhr.responseText)
-
-                    let response = JSON.parse(xhr.responseText);
-                    rubriek.removeAttribute("disabled")
-                    rubriek.innerHTML = "";
-
-                    let options = "";
-                    for (var i = 0; i < response.length; i++) {
-                        let option = document.createElement("option");
-                        option.setAttribute('value', response[i]);
-                        option.text = response[i];
-                        rubriek.append(option)
-                    }
-                }
-            }
-            xhr.send('id=' + id_l)
-        }
-    })();
     const paginaMakenUtility = (function () {
         let categories = document.querySelectorAll('#urlform table tbody');
         if (categories[0]) {
             let rows = categories[0].querySelectorAll('tr');
-            let items = rows[2].querySelectorAll('td ul li');
 
-            // let disablesItems = [];
-            let textLine = "";
-            for (var i = 1; i < items.length; i++) {
-                if (items[i].classList.contains("redbg") === false) {
-                    textLine += items[i].querySelector("span").innerHTML;
-                    textLine += " ";
-                };
+
+            let xrr2 = getContentItems(rows[2]);
+            let xrr4 = getContentItems(rows[4]);
+            // let monkeys =  TestStringDiffrence("Bewegingssensor", "Bewegingssensor,", 3 )
+            let monkeys =  TestStringDiffrence(getContentItems(rows[2]), getContentItems(rows[4]), 3, 20)
+
+
+
+
+            function getContentItems(row) {
+                let items = row.querySelectorAll('td ul li');
+                // let disablesItems = [];
+                let textLine = "";
+                for (var i = 0; i < items.length; i++) {
+                    if (
+                        items[i].classList.contains("redbg") === false &&
+                        items[i].querySelector('span').innerHTML !== ""
+                    ) {
+                        if (textLine.length !== 0) {
+                            textLine += " ";
+                        }
+                        textLine += items[i].querySelector("span").innerHTML;
+                    };
+                }
+                return textLine;
             }
-            console.log(textLine);
         }
-
-
-
-        // let checkbox = document.querySelectorAll('#urlform table tbody tr')[2].querySelector('td input')
-        // console.log(checkbox)
-        // checkbox.addEventListener('onchange', function(){
-        //     alert("changed");
-        //
-        // });
-
-        // // document.getElementById('use_chk16848649').addEventListener('change', function(){
-        // //     alert("changed");
-        // // });
-
-
-
-
 
         /*******************************
           string diffrence calculations
         *******************************/
-        let monkeys =  TestStringDiffrence("Bewegingssensor", "Bewegingssensor,", 3 )
+
 
         function TestStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed) {
             let editDistance = levenshteinDistance(string1, string2);
@@ -689,7 +399,7 @@ try {
     })();
 
 } catch(err) {
-    alert("code is broken");
+    alert("pagina_maken is broken");
     console.log(err);
 }
 finally {
