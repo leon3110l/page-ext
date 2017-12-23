@@ -614,26 +614,10 @@ try {
           string diffrence calculations
         *******************************/
 
-        let monkeys =  TestStringDiffrence("Bewegingssensor", "Bewegingssensor,", 3 )
+        let monkeys = testPercentDiffrence("Bewegingssensor", "Bewegingssensor,")
 
-        function TestStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed) {
+        function testPercentDiffrence(string1, string2) {
             let editDistance = levenshteinDistance(string1, string2);
-            let editPercentage = testPercentDiffrence(string1, string2,editDistance)
-
-            console.log("editDistance = " + editDistance)
-            console.log("editPercentage = " + editPercentage)
-
-            if (editDistance <= (editDistanceAllowed)) {
-                return true;
-            } else {
-                if (editPercentage <= (editPercentageAllowed) ) {
-                    return true
-                }
-            }
-            return false
-        }
-
-        function testPercentDiffrence(string1, string2, editDistance) {
             let longestDistance
             if (string1.length > string2.length) {
                 longestDistance = string1.length;
@@ -642,8 +626,22 @@ try {
             }
 
             let editPercentage = (editDistance / longestDistance) * 100;
-            return editPercentage;
+
+            console.log("longestDistance = " + longestDistance)
+            console.log("editDistance = " + editDistance)
+            console.log("editPercentage = " + editPercentage)
+
+            if (editDistance < 3) {
+                return true;
+            } else {
+                if (editPercentage < (21) ) {
+                    return true
+                }
+            }
+
+            return false
         }
+
 
         /*
         Copyright (c) 2011 Andrei Mackenzie
