@@ -5,7 +5,7 @@
 
  -- auto executes h3 remover onload
  -- auto fires addEventListener onload */
-const addUrlpage = (function () {
+const urlpage_Module = (function () {
     return {
         eventListener : (function () {
             const urlForm = document.querySelector('textarea[name="urls"]')

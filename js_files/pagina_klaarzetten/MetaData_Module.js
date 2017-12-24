@@ -1,4 +1,4 @@
-const paginaKlaarzettenMetaData = (function () {
+const metaData_Module = (function () {
     const formElements = document.querySelectorAll('#zoeken #pagesettings .form-group');
     if (formElements) {
         window.addEventListener("keyup", function(e) {

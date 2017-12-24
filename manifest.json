@@ -16,9 +16,9 @@
                 "js_files/pagina_maken/testStringDifferences_Module.js",
                 "js_files/pagina_maken/checkDoubleLinks_Module.js",
 
-                "js_files/pagina_klaarzetten/ChooseUrls_Module.js",
-                "js_files/pagina_klaarzetten/MetaData_Module.js",
-                "js_files/pagina_klaarzetten/UrlPage_Module.js"
+                "js_files/pagina_klaarzetten/chooseUrls_Module.js",
+                "js_files/pagina_klaarzetten/metaData_Module.js",
+                "js_files/pagina_klaarzetten/urlPage_Module.js"
             ]
         }
     ]
