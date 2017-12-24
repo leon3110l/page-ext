@@ -8,7 +8,15 @@
     "content_scripts": [
         {
             "matches": ["http://51.255.87.34/*"],
-            "js": ["js_files/global_variables.js","js_files/pagina_maken.js","js_files/pagina_klaarzetten.js"]
+            "js": [
+                "js_files/global_variables.js",
+
+                "js_files/pagina_maken/colorSuggestor_Module.js",
+                "js_files/pagina_maken/filter_Module.js",
+                "js_files/pagina_maken/testStringDifferences_Module.js",
+                "js_files/pagina_maken/checkDoubleLinks_Module.js",
+
+                "js_files/pagina_klaarzetten.js"]
         }
     ]
 }
