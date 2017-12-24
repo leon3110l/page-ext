@@ -1,4 +1,4 @@
-const chooseUrls_Module = (function () {
+const klaarzetten = (function () {
 
     //private properties
     const removeList = [
@@ -78,7 +78,7 @@ const chooseUrls_Module = (function () {
             window.addEventListener("keyup", function(e) {
                 if (e.shiftKey === true) {
                     if ( e.key.toLowerCase() === "d") {
-                        chooseUrls_Module.runScript();
+                        klaarzetten.runScript();
                     }
                 }
             }, 1 );
