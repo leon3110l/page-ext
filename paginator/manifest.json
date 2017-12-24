@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "name": "Paginator",
+    "version": "3.0",
+
+    "description": "kijkt voor dubbele links, helpt tijdens het klaarzetten,",
+
+    "content_scripts": [
+        {
+            "matches": ["http://51.255.87.34/*"],
+            "js": [
+                "global_variables.js",
+
+                "pagina_maken/colorSuggestor_Module.js",
+                "pagina_maken/filter_Module.js",
+                "pagina_maken/testStringDifferences_Module.js",
+                "pagina_maken/checkDoubleLinks_Module.js",
+
+                "pagina_klaarzetten/chooseUrls_Module.js",
+                "pagina_klaarzetten/metaData_Module.js",
+                "pagina_klaarzetten/urlPage_Module.js"
+            ]
+        }
+    ]
+}
