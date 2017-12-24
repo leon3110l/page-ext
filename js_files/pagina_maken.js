@@ -3,7 +3,7 @@ try {
      Start of the singletons
     -----------------------*/
 
-    const paginaMaken = (function (programSettings) {
+    const paginaMaken_Module = (function (programSettings) {
 
         /*----------------
          Private variables
@@ -241,99 +241,154 @@ try {
                 }
 
             })(),
-
-            /*-----------
-             linkColourer
-            -------------
-
-            --Colours the links based upon some specified rules*/
-            linkColourer : (function (settings) {
-                if (settings.methodEnabled == true) {
-
-                    for (let tableRow of tableRows) {
-                        const tags = tableRow.querySelectorAll('td ul li');
-
-                        for (let tag of tags) {
-                            const state = {
-                                site: false,
-                            }
-                            const text = tag.querySelector('span').innerHTML.toLowerCase();
-
-                            if (settings.red == true) {
-                                if (text.length === 1 && text != '/') {
-                                    tag.style.border = '5px solid red'
-                                }
-                            }
-
-                            if (settings.orange == true) {
-                                if (
-                                    text.search(remCharacters) > -1 ||
-                                    text.search(website) > -1 ||
-                                    text.indexOf('home') > -1
-                                ) {
-                                    tag.style.border = '5px solid orange'
-                                    state.site = true
-                                }
-                            }
-
-                            if (settings.yellow == true) {
-                                if (text.search(endCharacters) > -1 && !state.site) {
-                                    tag.style.border = '5px solid yellow'
-                                }
-                            }
-                        }
-                    }
-                }
-            })(programSettings.linkColourer)
         }
     })(programSettings);
 
 
-
-    const paginaMakenUtility = (function () {
+    // Controls double link checker
+    // Depends on the testStringDiffrences_Module
+    const paginaMakenUtility_Module = function (programSettings) {
         let categories = document.querySelectorAll('#urlform table tbody');
+
+        // if categories[0] exists
         if (categories[0]) {
-            let rows = categories[0].querySelectorAll('tr');
 
+            function checkDoubleLinks(category) {
+                const rows = category.querySelectorAll("tr");
+                const checked = getCheckedArray(rows)
 
-            let xrr2 = getContentItems(rows[2]);
-            let xrr4 = getContentItems(rows[4]);
-            // let monkeys =  TestStringDiffrence("Bewegingssensor", "Bewegingssensor,", 3 )
-            let monkeys =  TestStringDiffrence(getContentItems(rows[2]), getContentItems(rows[4]), 3, 20)
+                return linkChecker(rows, checked, category)
 
+                function getCheckedArray(rows) {
+                    checkedArray = [];
+                    for (let i = 2; i < rows.length; i++) {
+                        if(rows[i].children[0].children[0].checked == false) {
+                            checkedArray.push(false)
+                        } else if (rows[i].children[0].children[0].checked == true) {
+                            checkedArray.push(true)
+                        };
+                    }
+                    return checkedArray
+                };
 
-
-
-            function getContentItems(row) {
-                let items = row.querySelectorAll('td ul li');
-                // let disablesItems = [];
-                let textLine = "";
-                for (var i = 0; i < items.length; i++) {
-                    if (
-                        items[i].classList.contains("redbg") === false &&
-                        items[i].querySelector('span').innerHTML !== ""
-                    ) {
-                        if (textLine.length !== 0) {
-                            textLine += " ";
-                        }
-                        textLine += items[i].querySelector("span").innerHTML;
-                    };
+                function getContentItems(row) {
+                    let items = row.querySelectorAll('td ul li');
+                    let textLine = "";
+                    for (var i = 0; i < items.length; i++) {
+                        if (
+                            items[i].classList.contains("redbg") === false &&
+                            items[i].querySelector('span').innerHTML !== ""
+                        ) {
+                            if (textLine.length !== 0) {
+                                textLine += " ";
+                            }
+                            textLine += items[i].querySelector("span").innerHTML;
+                        };
+                    }
+                    return textLine;
                 }
-                return textLine;
+
+                function linkChecker(rows, checked, category) {
+                    for (var i = 0; i < checked.length-1; i++) {
+
+                        if (checked[i]) {
+                            for (var j = i+1; j < checked.length; j++) {
+                                if (checked[j]) {
+                                    let item1 = getContentItems(rows[2+(i*2)])
+                                    let item2 = getContentItems(rows[2+(j*2)])
+                                    let result = testStringDiffrences_Module(item1, item2, 3, 20)
+
+                                    if(result) {
+                                        rows[2+(j*2)].children[1].style.backgroundColor = "red";
+                                        rows[2+(j*2)].classList.add("wrongLink");
+                                        return false
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    let removeRed = category.querySelectorAll(".wrongLink")
+                    for (var i = 0; i < removeRed.length; i++) {
+                        removeRed[i].children[1].style.backgroundColor = "";
+                        removeRed[i].classList.remove("wrongLink");
+                    }
+                    return true
+                }
+
             }
+
+            function handleClickEvent(e, category) {
+                const input = e.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0]
+                if (e.target.classList.contains("cross") ) {
+                    input.checked = true
+
+                }
+                setTimeout(function () {
+                    let x = checkDoubleLinks(category);
+                    console.log(x);
+                }, 200);
+
+            }
+
+
+            //add eventListener module
+            const addEventListeners = (function(categories) {
+                for (let i = 0; i < categories.length; i++) {
+                    categories[i].addEventListener("click", function(e) {
+                        handleClickEvent(e, categories[i])
+                    }, true);
+                }
+            })(categories)
         }
 
-        /*******************************
-          string diffrence calculations
-        *******************************/
+    } (programSettings);
 
+    const linkColourer_module = (function (settings) {
+        const tags = document.querySelectorAll('#urlform table tbody tr td ul li')
 
-        function TestStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed) {
+        if (settings.methodEnabled == true) {
+            for (let tag of tags) {
+                const state = {
+                    site: false,
+                }
+                const text = tag.querySelector("span").innerHTML.toLowerCase();
+
+                if (settings.red == true) {
+                    if (text.length === 1 && text != '/') {
+                        tag.style.border = '5px solid #272'
+                    }
+                }
+
+                if (settings.orange == true) {
+                    if (
+                        text.search(remCharacters) > -1 ||
+                        text.search(website) > -1 ||
+                        text.indexOf('home') > -1
+                    ) {
+                        tag.style.border = '5px solid orange'
+                        state.site = true
+                    }
+                }
+
+                if (settings.yellow == true) {
+                    if (text.search(endCharacters) > -1 && !state.site) {
+                        tag.style.border = '5px solid yellow'
+                    }
+                }
+            }
+        }
+    })(programSettings.linkColourer);
+
+    /*******************************
+      string diffrence calculations
+    *******************************/
+    const testStringDiffrences_Module = (function(string1, string2, editDistanceAllowed, editPercentageAllowed) {
+        //String testerModule
+        return testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed)
+
+        function testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed) {
             let editDistance = levenshteinDistance(string1, string2);
             let editPercentage = testPercentDiffrence(string1, string2,editDistance)
-
-            console.log("editDistance = " + editDistance)
-            console.log("editPercentage = " + editPercentage)
 
             if (editDistance <= (editDistanceAllowed)) {
                 return true;
@@ -396,7 +451,7 @@ try {
 
             return matrix[b.length][a.length];
         };
-    })();
+    });
 
 } catch(err) {
     alert("pagina_maken is broken");

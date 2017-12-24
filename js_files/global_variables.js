@@ -92,7 +92,7 @@ const programSettings = {
                 "www",
                 "be",
                 "nu",
-                "info"
+                "info",
             ],
 
             contains: [
