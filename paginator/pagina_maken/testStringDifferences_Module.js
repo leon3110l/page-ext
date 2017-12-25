@@ -6,7 +6,8 @@
 *******************************/
 
 const testStringDifferences_Module = (function(string1, string2, editDistanceAllowed, editPercentageAllowed) {
-    return testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed)
+
+    // return testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed)
 
     function testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed) {
         let editDistance = levenshteinDistance(string1, string2);
@@ -73,4 +74,14 @@ const testStringDifferences_Module = (function(string1, string2, editDistanceAll
 
         return matrix[b.length][a.length];
     };
-});
+
+    return {
+        // p means public
+        p_percentage: (function(string1, string2, editDistanceAllowed, editPercentageAllowed) {
+            return testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed)
+        }),
+        p__characters: (function(string1, string2) {
+            return levenshteinDistance(string1, string2)
+        })
+    }
+})();

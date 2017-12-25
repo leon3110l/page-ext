@@ -49,7 +49,7 @@ const checkDoubleLinks_Module = function (programSettings) {
                             if (checked[j]) {
                                 let item1 = getContentItems(rows[2+(i*2)])
                                 let item2 = getContentItems(rows[2+(j*2)])
-                                let result = testStringDifferences_Module(item1, item2, 3, 20)
+                                let result = testStringDifferences_Module.p_percentage(item1, item2, 3, 20)
 
                                 if(result) {
                                     rows[2+(j*2)].children[1].style.backgroundColor = "red";
@@ -78,7 +78,6 @@ const checkDoubleLinks_Module = function (programSettings) {
             }
             setTimeout(function () {
                 let x = checkDoubleLinks(category);
-                console.log(x);
             }, 200);
 
         }
@@ -92,6 +91,14 @@ const checkDoubleLinks_Module = function (programSettings) {
                 }, true);
             }
         })(categories)
+        return {
+            run: function (category) {
+                checkDoubleLinks(category)
+            },
+            public_getContentItems: function (row) {
+                getContentItems(row)
+            }
+        }
     }
 
 } (programSettings);
