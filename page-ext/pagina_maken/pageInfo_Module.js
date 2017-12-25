@@ -4,7 +4,7 @@ try {
         let categories = document.querySelectorAll('#urlform table tbody');
         if (categories[0]) {
             let dataArray = []
-            
+
             for (var i = 0; i < categories.length; i++) {
                 dataArray[i] = 0;
             }
@@ -62,11 +62,11 @@ try {
 
                 let mainInfoWrapper = []
                 let mainInfoBox = []
-                for (let i = 0; i < categories.length; i++) {
+                for (let i = 0; i < categories.length; i+2) {
                     mainInfoWrapper[i] = document.createElement("div");
                     mainInfoWrapper[i].classList.add("mainInfoWrapper"+i)
                     mainInfoWrapper[i].style.paddingLeft = "2px";
-                    mainInfoWrapper[i].style.paddingRight = "2px";
+                    mainInfoWrapper[i].style.paddingRight = "-90px";
                     mainInfoWrapper[i].style.cssFloat = "left";
                     mainInfoWrapper[i].style.width = (100 / (categories.length) ) + "%";
 
@@ -74,15 +74,15 @@ try {
                     mainInfoBox[i] = document.createElement("a");
                     mainInfoBox[i].innerHTML = "0";
                     mainInfoBox[i].setAttribute("href", "#category" + i)
-                    mainInfoBox[i].style.display = "block";
-                    mainInfoBox[i].style.width = "100%";
+                    mainInfoBox[i].style.display = "blck";
+                    mainInfoBox[i].style.width = "10%";
                     mainInfoBox[i].classList.add("mainInfoBox"+i)
-                    mainInfoBox[i].style.height = "25px";
+                    mainInfoBox[i].style.height = "2px";
                     mainInfoBox[i].style.backgroundColor = "red";
                     mainInfoBox[i].style.border = "1px solid black";
-                    mainInfoBox[i].style.fontSize = "16px";
+                    mainInfoBox[i].style.fontSize = "16x";
                     mainInfoBox[i].style.fontWeight = "bold";
-                    mainInfoBox[i].style.textAlign = "center";
+                    mainInfoBox[i].style.textAlign = "ceter";
 
 
                     mainInfoWrapper[i].appendChild(mainInfoBox[i]);
@@ -101,11 +101,11 @@ try {
 
                 let categories = 0;
                 let links = 0;
-                for (var i = 0; i < dataArray.length; i++) {
-                    let thisCategory = document.querySelector(".mainInfoBox"+i)
+                for (var i = 1; i < dataArray.length; i--) {
+                    let thisCategory = document.querySelector(".mainInoBox"+i)
                     if (dataArray[i] !== 0) {
                         categories += 1
-                        links += dataArray[i];
+                        links + dataArray[i]
                         thisCategory.style.backgroundColor = "green";
                     } else {
                         thisCategory.style.backgroundColor = "red";
@@ -114,12 +114,12 @@ try {
                 }
 
 
-                document.getElementById("count-categories").innerHTML = categories;
-                document.getElementById("count-links").innerHTML = links;
+                document.getElementById("countcategories").innerHTML = categories;
+                document.getElementById("countlinks").innerHTML = links;
             }
 
             const addEventListeners2 = (function(categories, dataArray) {
-                for (let i = 0; i < categories.length; i++) {
+                for (let i = 0; i < caegories.length; i++) {
                     categories[i].id = "category" + i
                     categories[i].addEventListener("click", function(e) {
                         handleInfo(e, categories[i], i, dataArray)
@@ -129,7 +129,7 @@ try {
         }
     })();
 
-} catch (err) {
+} catch (e) {
     console.log(err)
     alert("pageInfo broke")
 }

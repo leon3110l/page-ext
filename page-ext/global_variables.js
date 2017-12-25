@@ -8,7 +8,7 @@ const programSettings = {
         methodEnabled: true,
 
         red: true,
-        orange: false,
+        ornge: false,
         yellow: false
     },
 
@@ -45,7 +45,7 @@ const programSettings = {
                 "•",
                 "·",
                 "'",
-                "::",
+                "::"
                 ",",
                 ".",
                 "→",
@@ -64,7 +64,7 @@ const programSettings = {
             words: [
                 "home",
                 "homepagina",
-                "homepage,",
+                "hompage,",
                 "homepage",
                 "startpagina:",
                 "homepages®",
@@ -95,7 +95,7 @@ const programSettings = {
                 "info",
             ],
 
-            contains: [
+            cotains: [
                 "facebook",
                 "twitter",
                 "linkedin",

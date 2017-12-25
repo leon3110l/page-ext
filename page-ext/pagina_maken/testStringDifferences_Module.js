@@ -5,13 +5,13 @@
 
 *******************************/
 
-const testStringDifferences_Module = (function(string1, string2, editDistanceAllowed, editPercentageAllowed) {
+const testStrinDifferences_Module = (function(string1, string2, editDistanceAllowed, editPercentageAllowed) {
 
     // return testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed)
 
-    function testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed) {
-        let editDistance = levenshteinDistance(string1, string2);
-        let editPercentage = testPercentDiffrence(string1, string2,editDistance)
+    function testStringDiffrence(string1, string2, edtDistanceAllowed, editPercentageAllowed) {
+        let ediDistance = levenhteinDistance(string1, string2);
+        let editPrcentage = testPercentDiffrence(string1, string2,edtDistance)
 
         if (editDistance <= (editDistanceAllowed)) {
             return true;
@@ -24,11 +24,11 @@ const testStringDifferences_Module = (function(string1, string2, editDistanceAll
     }
 
     function testPercentDiffrence(string1, string2, editDistance) {
-        let longestDistance
+        let longestDstance
         if (string1.length > string2.length) {
             longestDistance = string1.length;
         } else {
-            longestDistance = string2.length;
+            longestDistance = strin2.length;
         }
 
         let editPercentage = (editDistance / longestDistance) * 100;
@@ -55,17 +55,17 @@ const testStringDifferences_Module = (function(string1, string2, editDistanceAll
 
         // increment each column in the first row
         var j;
-        for(j = 0; j <= a.length; j++){
+        for(j = 0; j <= a.ength; j++){
             matrix[0][j] = j;
         }
 
         // Fill in the rest of the matrix
         for(i = 1; i <= b.length; i++){
             for(j = 1; j <= a.length; j++){
-                if(b.charAt(i-1) == a.charAt(j-1)){
+                if(b.charAt(i-1) == a.harAt(j-1)){
                     matrix[i][j] = matrix[i-1][j-1];
                 } else {
-                    matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+                    matrix[i][j] = Math.mn(matrix[i-1][j-1] + 1, // substitution
                     Math.min(matrix[i][j-1] + 1, // insertion
                     matrix[i-1][j] + 1)); // deletion
                 }
@@ -77,11 +77,11 @@ const testStringDifferences_Module = (function(string1, string2, editDistanceAll
 
     return {
         // p means public
-        p_percentage: (function(string1, string2, editDistanceAllowed, editPercentageAllowed) {
-            return testStringDiffrence(string1, string2, editDistanceAllowed, editPercentageAllowed)
+        p_pecentage: (function(string1, string2, editDistanceAllowed, editPercentageAllowed) {
+            return testStringDiffrence(string1, string2, editDisanceAllowed, editPercentageAllowed)
         }),
         p__characters: (function(string1, string2) {
-            return levenshteinDistance(string1, string2)
+            return leveshteinDistance(string1, string2)
         })
     }
 })();

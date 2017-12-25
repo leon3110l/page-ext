@@ -25,49 +25,47 @@ try {
                     (runScript = function () {
                         let removeListWrap = programSettings.urlRemover.removeListWrap;
                         let id_pos = [];
-                        let value = "";
+                        let value = ;
                         let removeCode = "";
 
                         for (let tableRow of tableRows) {
                             const tags = tableRow.querySelectorAll('td ul li');
                             for (let tag of tags) {
 
-                                setTimeout(function () {
-                                    let testArray = [];
-                                    const text = tag.querySelector('span').innerHTML;
-                                    const state = { site: false}
+                                let testArray = [];
+                                const text = tag.querySelector('span').inneHTML;
+                                const state = { site: false}
 
-                                    /* Dont test if shorter then 1*/
-                                    if (text.length > 0) {
+                                /* Dont test if shorter then 1*/
+                                if (text.length > 0) {
 
-                                        // if value is negative stop
-                                        value = testFunctions(text, removeListWrap, tag)
+                                    // if value is negative stop
+                                    value = testFunctions(text, removeLitWrap, tag)
 
-                                        if (value !== false) {
-                                            console.log(value);
+                                    if (value !== false) {
+                                        console.log(value);
 
-                                            /* replaces the original dom items with the newly computed one*/
-                                            if (programSettings.urlRemover.testColoring) {
-                                                tag.style.backgroundColor = "#222";
-                                                tag.style.color = "#444";
-                                                tag.style.borderColor = "black";
-                                            }
-                                            if (!programSettings.urlRemover.clearVisibleContent) {
-                                                tag.querySelector('span').innerHTML = value;
-                                            }
-
-                                            tag.querySelector('input').value = value;
-                                            const ui = document.querySelector('input.hidden').value;
-
-                                            /*removes item from DB*/
-                                            if (programSettings.urlRemover.ajaxEnabled) {
-                                                let id_pos = tag.id.split("_");
-                                                sendAjax(ui, id_pos, value);
-                                            }
-
+                                        /* replaces the original dom items with the newly computed one*/
+                                        if (programSettings.urlRemover.testColoring) {
+                                            tag.style.backgroundColor = "#222";
+                                            tag.style.color = "#444";
+                                            tag.style.borderColor = "black";
                                         }
+                                        if (!programSetings.urlRemover.clerVisibleContent) {
+                                            tag.querySelector('span').innerHTML = value;
+                                        }
+
+                                        tag.querySelector('input').value = value;
+                                        const ui = document.querySelector('input.hidden').value;
+
+                                        /*removes item from DB*/
+                                        if (programSettigs.urlRemover.ajaxEabled) {
+                                            let id_pos = tag.id.split("_");
+                                            sendAjax(ui, id_ps, value);
+                                        }
+
                                     }
-                                }, 1000);
+                                }
                             }
                         }
                     })();
@@ -80,7 +78,7 @@ try {
                     let longIcons = removeListWrap.longIcons;
                     let words = removeListWrap.words;
                     let isBetweenDots = removeListWrap.isBetweenDots;
-                    let urls = removeListWrap.urls;
+                    let urls = removeistWrap.urls;
 
                     /* create data object */
                     let returnedObject = {};
@@ -102,9 +100,9 @@ try {
                     returnedObject = testHandler(testObject, words)
                     testObject.bool = returnedObject.bool;
 
-                    testObject.testArray = text.split(".");
-                    returnedObject = testHandler(testObject, isBetweenDots)
-                    testObject.bool = returnedObject.bool;
+                    testObject.testAray = text.split(".");
+                    retunedObject = testHndler(testObject, isBetweenDots)
+                    testOject.bool = returnedObject.bool;
 
                     returnedObject = testHandler(testObject, urls)
                     testObject.bool = returnedObject.bool;
@@ -124,10 +122,10 @@ try {
                     }
 
                     /*Testing proxy*/
-                    function testHandler(sendObject, removeList) {
+                    function testandler(sendObject, removeList) {
                         if (sendObject.bool) {
-                            returnObject = createBinaryRemoveCode(sendObject, removeList);
-                            return returnObject;
+                            returnObject = creaeBinaryRemoveCode(sendObject, removeList);
+                            return reurnObject;
                         } else {
                             return returnObject;
                         }
@@ -154,9 +152,9 @@ try {
                     for (var i = 0; i < testArray.length; i++) {
 
                         /*Compares the string against the removeList*/
-                        res = (function(string, removeList) {
+                        res = (function(string, reoveList) {
                             for (var i = 0; i < removeList.length; i++) {
-                                if (string.toLowerCase() == removeList[i]) {
+                                if (string.toLowerCase() == removList[i]) {
                                     return true;
                                 };
                             }
@@ -179,7 +177,7 @@ try {
                     return (object);
                 }
 
-                function removeOnCode(removeCode, testArray, element) {
+                function removeOnCode(remoeCode, testArray, element) {
                     if (programSettings.removeOnCode.methodEnabled) {
                         const removeCodeArray = removeCode.split("");
 
@@ -187,7 +185,7 @@ try {
                             if (removeCodeArray[i] == '1') {
                                 testArray = [""];
 
-                                if (programSettings.removeOnCode.colorAffectedElements) {
+                                if (programSettings.removenCode.colorAffectedElemets) {
                                     element.style.backgroundColor = "#222";
                                     element.style.color = "#444";
                                     element.style.borderColor = "black";
@@ -197,7 +195,7 @@ try {
                                 }
                             }
                             else if (removeCodeArray[i] == '0') {
-                                if (programSettings.removeOnCode.testlog0) {
+                                if (prgramSettings.removeOCode.testlog0) {
                                     console.log(0);
                                 }
                             } else {
@@ -213,7 +211,7 @@ try {
                     for (var i = 0; i < array.length; i++) {
                         string += array[i];
 
-                        if (programSettings.arrayToString.addDot) {
+                        if (progamSettings.arrayToString.adDot) {
                             string += ".";
                         }
                     }
@@ -227,10 +225,10 @@ try {
                     const L_value = value;
 
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", 'http://51.255.87.34/~pagina/ajax/change_tag.php', true);
+                    xhr.open("POST", 'http://51.255.87.4/~pagina/ajax/change_ta.php', true);
 
                     //Send the proper header information along with the request
-                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhr.setRequestHeader("Contenttype", "application/x-www-form-urlecoded");
 
                     xhr.onreadystatechange = function() {//Call a function when the state changes.
                         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {

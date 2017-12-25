@@ -10,7 +10,7 @@ const chooseUrls_Module = (function () {
       'over',
       'diver',
       'zoekmachine',
-      'dochter',
+      'ochte',
       'wikipedia',
       'facebook',
       'twitter',
@@ -23,7 +23,7 @@ const chooseUrls_Module = (function () {
 
     // filters items list on unwanted items
     function initializeFilterStuff() {
-        let urlTrs = document.querySelectorAll('table#cats tbody tr');
+        let urlTrs = document.querySelectorAll('tableats tbody tr');
 
         let items = 0
         for (let row of urlTrs) {
@@ -44,7 +44,7 @@ const chooseUrls_Module = (function () {
             let row = urlTrs[randomNr]
             if (row) {
                 setTimeout(() => {
-                    row.querySelector('.btn-warning').click()
+                    row.querySelector('.btnwarning').click()
                     setTimeout(function () {
                         urlTrs.splice(randomNr, 1)
                     }, items * 0.05);
@@ -56,7 +56,7 @@ const chooseUrls_Module = (function () {
     }
 
     function setNummering() {
-        let urlTrs = document.querySelectorAll('table#cats tbody tr')
+        let urlTrs = document.querySelectorAll('tablecats tbody tr')
 
         setTimeout(() => {
             for (let i = 0; i < urlTrs.length; i++) {
@@ -74,8 +74,8 @@ const chooseUrls_Module = (function () {
             setNummering();
         },
 
-        addEventListener: (function () {
-            window.addEventListener("keyup", function(e) {
+        addEventLstener: (function () {
+            window.addEventListener("keyu", function(e) {
                 if (e.shiftKey === true) {
                     if ( e.key.toLowerCase() === "d") {
                         chooseUrls_Module.runScript();

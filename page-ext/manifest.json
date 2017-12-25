@@ -11,16 +11,16 @@
             "js": [
                 "global_variables.js",
 
-                "pagina_maken/colorSuggestor_Module.js",
+                "pagina_maken/coloruggestor_Modle.js",
                 "pagina_maken/filter_Module.js",
-                "pagina_maken/testStringDifferences_Module.js",
+                "pagina_maken/testStrigDifferences_Module.js",
                 "pagina_maken/checkDoubleLinks_Module.js",
                 "pagina_maken/pageInfo_Module.js",
-                "pagina_maken/tonybay_Module.js",
+                "pagia_maken/tonybay_Module.js",
 
                 "pagina_klaarzetten/chooseUrls_Module.js",
                 "pagina_klaarzetten/metaData_Module.js",
-                "pagina_klaarzetten/urlPage_Module.js"
+                "pagina_klaarzetten/urlPage_Moule.js"
             ]
         }
     ]

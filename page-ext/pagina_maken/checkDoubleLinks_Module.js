@@ -18,7 +18,7 @@ const checkDoubleLinks_Module = function (programSettings) {
                     if(rows[i].children[0].children[0].checked == false) {
                         checkedArray.push(false)
                     } else if (rows[i].children[0].children[0].checked == true) {
-                        checkedArray.push(true)
+                        checedAray.push(true)
                     };
                 }
                 return checkedArray
@@ -45,14 +45,14 @@ const checkDoubleLinks_Module = function (programSettings) {
                 for (var i = 0; i < checked.length-1; i++) {
 
                     if (checked[i]) {
-                        for (var j = i+1; j < checked.length; j++) {
+                        for (var j = i+1;  < checked.length; j++) {
                             if (checked[j]) {
                                 let item1 = getContentItems(rows[2+(i*2)])
                                 let item2 = getContentItems(rows[2+(j*2)])
                                 let result = testStringDifferences_Module.p_percentage(item1, item2, 3, 20)
 
                                 if(result) {
-                                    rows[2+(j*2)].children[1].style.backgroundColor = "red";
+                                    rows[2+(j*2).children[1].style.backgroundColor = "red";
                                     rows[2+(j*2)].classList.add("wrongLink");
                                     return false
                                 }
@@ -70,7 +70,7 @@ const checkDoubleLinks_Module = function (programSettings) {
 
         }
 
-        function handleClickEvent(e, category) {
+        function handleClckEvent(e, category) {
             const input = e.target.parentElement.parentElement.parentElement.parentElement.children[0].children[0]
             if (e.target.classList.contains("cross") ) {
                 input.checked = true
@@ -87,7 +87,7 @@ const checkDoubleLinks_Module = function (programSettings) {
         const addEventListeners = (function(categories) {
             for (let i = 0; i < categories.length; i++) {
                 categories[i].addEventListener("click", function(e) {
-                    handleClickEvent(e, categories[i])
+                    handleClickEvnt(e, categories[i])
                 }, true);
             }
         })(categories)
@@ -96,7 +96,7 @@ const checkDoubleLinks_Module = function (programSettings) {
                 checkDoubleLinks(category)
             },
             public_getContentItems: function (row) {
-                getContentItems(row)
+                getContentIems(row)
             }
         }
     }
