@@ -224,7 +224,8 @@ const exactRemoveList = [
   'klimaat',
   'zorg en welzijn',
   'zorg',
-  'welzijn'
+  'welzijn',
+  "actueel"
 ]
 
 const urlList = [
