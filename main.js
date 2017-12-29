@@ -267,7 +267,21 @@ const exactRemoveList = [
   "winkels buitenland",
   "chatten !!",
   "columns",
-  "-tips!!-"
+  "-tips!!-",
+  "dier en natuur",
+  "dier",
+  "natuur",
+  "verkeer / vervoer",
+  "verkeer",
+  "vervoer",
+  "vakantie boeken",
+  "adviesbureaus",
+  "onderzoek",
+  "vraag en aanbod",
+  "tip",
+  "woordenboek",
+  "makelaars",
+  "meer beginthier...",
 ]
 
 const urlList = [
