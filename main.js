@@ -26,7 +26,9 @@ const removeList = [
   'regio ',
   'netnr ',
   'gerelat',
-  / [0 - 9]/g,
+  /\s[0-9]$/g,
+  /\s[a-z]$/g,
+  /\s[A-Z]$/g,
   /[^a-z /][ - ]/g,
 ]
 
@@ -515,6 +517,7 @@ for (let i = 0; i < 5; i++) {
     if (textElem) {
       const text = textElem.innerHTML.toLowerCase()
       console.log(index);
+      console.log(removeList.some(x => console.log(text.search(x), x, text)))
       if (removeList.some(x => text.search(x) > -1)) {
         row.querySelector('.btn-warning').click()
         urlTrs.splice(index, 1)
