@@ -282,7 +282,29 @@ const exactRemoveList = [
   "woordenboek",
   "makelaars",
   "meer beginthier...",
-  "2de hands"
+  "2de hands",
+  "bus",
+  "de taal",
+  "telemark",
+  "bezienswaardigheden",
+  "accommodatie",
+  "reisverslagen",
+  "kranten",
+  "religie",
+  "weer en tijd",
+  "zakelijk",
+  "newspapers",
+  "dit is een rubriek",
+  "(studie)projecten",
+  "projecten",
+  "waar te boeken",
+  "belgi?",
+  "gelderland",
+  "uitgelicht",
+  "specialisten",
+  "verzekeringen",
+  "aandoeningen",
+  "betalen"
 ]
 
 const urlList = [
