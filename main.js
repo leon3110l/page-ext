@@ -282,6 +282,7 @@ const exactRemoveList = [
   "woordenboek",
   "makelaars",
   "meer beginthier...",
+  "2de hands"
 ]
 
 const urlList = [
