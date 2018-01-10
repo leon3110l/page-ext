@@ -304,7 +304,8 @@ const exactRemoveList = [
   "specialisten",
   "verzekeringen",
   "aandoeningen",
-  "betalen"
+  "betalen",
+  "andere dochters"
 ]
 
 const urlList = [
