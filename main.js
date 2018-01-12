@@ -305,7 +305,23 @@ const exactRemoveList = [
   "verzekeringen",
   "aandoeningen",
   "betalen",
-  "andere dochters"
+  "andere dochters",
+  "diensten",
+  "dienst",
+  "politiek",
+  "portals",
+  "portal",
+  "onderwijs",
+  "kunst en cultuur",
+  "regio's en steden",
+  "duiken",
+  "online shops(nl)",
+  "online shops",
+  "events",
+  "event",
+  "freeware",
+  "geluk",
+  "zelfstandig"
 ]
 
 const urlList = [
